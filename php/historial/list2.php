@@ -35,12 +35,17 @@ for ($i = 0; $i < $longitud; $i++){
         die('Querie failed: '. mysqli_error($db));
     }
     $row = mysqli_fetch_array($res);
-  
+
+    /** No todos los devices registrados en $devices estarán registrados en la tabla 'equipos' */
+    /** Ergo, debemos revisar que el valor obtenido, en cada una de las iteraciones, no sea NULL */
+    if($row != null){
         $array[] = array(
             'equipo' => $row['equipo'],
             'hrs' => $row['hrsMotor'],
             'id' => $row['deviceId']
         );
+    }
+        
     
     
 

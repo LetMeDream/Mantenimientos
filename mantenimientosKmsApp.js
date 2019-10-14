@@ -52,7 +52,7 @@ $(function () {
     })
 
     
-
+    /** Listing */
     function listThem(){
         
        
@@ -792,4 +792,91 @@ $(function () {
     }
     listThem();
     
+    /** Filtering */
+     /** Logic for the filtering process */
+     $('#lookIt').change(function () { 
+        
+        /** If there's a valua on the search (#lookIT) then proceed */
+        if( $('#lookIt').val()){
+            /** Variable que será enviada por AJAX. */ 
+            let search = $('#lookIt').val();
+            /** Hacemos una petición al servidor con AJAX desde Jquery */
+            //console.log(search);
+
+            /** AJAX HTTP VERB */
+            $.ajax({
+                type: "POST",
+                url: "php/mantenimientosKms/filter.php",
+                data: {date: search},
+                
+                success: function (response) {
+                    let filtrados = JSON.parse(response);
+                    console.log(filtrados);
+                    let templateX = '';
+                    // Now we create a template
+                    filtrados.forEach(y =>{
+                        templateX += `
+
+                       <div class='contenApp my-4'>
+                                <div class=''>
+                                    ${y.fechaIngreso}
+                                </div>
+                                                                    
+                                    <table class='table table-bordered table-sm' style='margin-top:-0px'>
+                                        <thead class='tabledark' id='tableWeird'>
+                                            <tr>
+                                                                
+                                                <td> Rutina de mantenimiento Nº: ${y.rutina}</td>    
+                                    
+                                            </tr>
+                                
+                                        </thead>
+                                        
+                                        <!-- Id registros, time to shine
+                                        -- In here we will load all of our data got from listingEquipos.php through app.js     -->
+                                        <tbody id='registros2'>
+                                            
+                                            <tr>
+
+                                            <td>
+                                            
+                                                <div class='row'>
+        
+                                                    <div class='col'> <b>Actividades:</b><br> ${y.actividades}</div>
+                                                    <div class='col'> <b>Observaciones:</b><br> ${y.comentariosActividades}</div>
+                                                
+                                                
+                                                
+        
+                                                </div>
+                                                <hr>
+                                                <br>
+                                       
+                                            </td>
+                                        
+                                            </tr>
+                                                
+                                            
+
+                                        </tbody>
+                                    </table>
+                                </div>        
+
+                                        `;
+                        
+                    })
+                    $('#inHere').html(templateX);
+                   
+                    $('#col_10').height( ($(document).height() ) );
+
+
+
+                }
+            });
+           
+        
+        } 
+        
+    });
+
 });

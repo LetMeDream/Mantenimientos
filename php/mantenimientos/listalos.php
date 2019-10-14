@@ -27,28 +27,9 @@
             'fechaIngreso' => $row['fechaIngreso'],
             'kilometraje' => $row['kilometrajeEnFecha'],
             'horasMotor' => $row['horasEnFecha'],
-            /* 'anoFabricacion' => $row['anoFabricacion'],
-            'ubicacion' => $row['ubicacion'],
-            'filtroAceiteMotor' => $row['filtroAceiteMotor'],
-            'filtroAceiteHidraulico' => $row['filtroAceiteHidraulico'],
-            'filtroAirePrimario' => $row['filtroAirePrimario'],
-            'filtroAireSecundario' => $row['filtroAireSecundario'],
-            'filtroCombustiblePrimario' => $row['filtroCombustiblePrimario'],
-            'filtroCombustibleSecundario' => $row['filtroCombustibleSecundario'],
-            'filtroTanqueGasoil' => $row['filtroTanqueGasoil'],
-            'tipoAceiteHidraulico' => $row['tipoAceiteHidraulico'],
-            'tipoAceiteMotor' => $row['tipoAceiteMotor'],
-            'tipoAceiteTransmision' => $row['tipoAceiteTransmision'],
-            'tipoAceiteCaja' => $row['tipoAceiteCaja'],
-            'capacidadCarterMotor' => $row['capacidadCarterMotor'],
-            'capacidadTanqueCaja' => $row['capacidadTanqueCaja'],
-            'capacidadTanqueTransmision' => $row['capacidadTanqueTransmision'],
-            'capacidadTanqueHidraulico' => $row['capacidadTanqueHidraulico'],
             
-            'filtroTransmision' => $row['filtroTransmision'],
-            'filtroTanqueHidraulico' => $row['filtroTanqueHidraulico'], */
             'actividades' => $row['actividades'],
-            /* 'observaciones' => $row['observaciones'], */
+           
             'idHoras' => $deviceId,
             'comentariosActividades' => $row['comentarios_actividades']
 

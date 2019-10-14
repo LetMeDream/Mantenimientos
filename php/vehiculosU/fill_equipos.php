@@ -35,13 +35,12 @@
             die('Querie failed: '. mysqli_error($db));
         }
         $row = mysqli_fetch_array($res);
-      
-        $array[] = array(
+        if ($row!=null){
+            $array[] = array(
                 'equipo' => $row['equipo'],
                 'deviceId' => $row['deviceId']
-        );
-        
-        
+            );
+        }
 
     }
 

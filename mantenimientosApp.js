@@ -131,10 +131,18 @@ $(function(){
                                 url: "php/mantenimientos/getMainRow.php", // Note como getMainRow ahora también calcula y actualiza el cálculo de horas
                                 data: "data",
                                 success: function (response) {
+
                                     console.log(response);
                                     let mainRow = JSON.parse(response);
-                                    let template = ''; let templating = '';
-                                    mainRow.forEach(element => {
+
+                                    if (mainRow.length == 0){
+                                        alert('El vehículo ' + nombre + ' no ha sido registrado.');
+                                        window.history.back();
+
+                                    } else{
+
+                                        let template = ''; let templating = '';
+                                        mainRow.forEach(element => {
                                         template += 
                                                 `
                                                     <tr>
@@ -155,12 +163,12 @@ $(function(){
                                                         <td class='rut4' hrs='${element.hrsReales4}' >${element.rutina4}</td>
                                                     </tr>
                                                 `
-                                    });
-                                    $('#registros').html(template);
-                                    $('#registrosHoras').html(templating);
+                                        });
+                                        $('#registros').html(template);
+                                        $('#registrosHoras').html(templating);
                                     
-                                    /**  */
-                                    let rutina1 = `
+                                        /**  */
+                                        let rutina1 = `
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act1'>1)Revisión del nivel de aceite del eje trasero y delantero.</label></div>
                                                         
@@ -223,7 +231,7 @@ $(function(){
                                                     </div>
                                                     
                                                     `;
-                                    let rutina2 = `
+                                        let rutina2 = `
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act16'> 16)Revisión de la manguera de admisión de aire.</label></div>
                                                         
@@ -249,7 +257,7 @@ $(function(){
                                                         
                                                     </div>
                                                     `
-                                    let rutina3 = `
+                                        let rutina3 = `
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act22'> 22)Cambio de aceite de eje delantero y trasero.</label></div>
                                                         
@@ -280,7 +288,7 @@ $(function(){
                                                     </div> 
 
                                                 `;
-                                    let rutina4 = `
+                                        let rutina4 = `
                                                 <!-- Rutina 1 -->
                                                 <div class='row'>
                                                     <div class='col-12'><label for='act1'>1)Revisión del nivel de aceite del eje trasero y delantero.</label></div>
@@ -406,111 +414,131 @@ $(function(){
                                                     
                                                 </div> 
                                                 `;
-                                    function detectarRutinaCercana(){
-                                                    /** Comenzamos por guardar todos los números mayores a cero en un arreglo. */
-                                                    var hrsParaRutina = [];
-                                                    if ($('.rut1').text() > 0 ){
-                                                       hrsParaRutina.push( $('.rut1').text() );
-                                                    } else{
-                                                       hrsParaRutina.push( $('.rut1').attr('hrs') );
-                                                    }
-                                                    if ($('.rut2').text() > 0 ){
-                                                        hrsParaRutina.push( $('.rut2').text() );
-                                                    }
-                                                    else{
-                                                       hrsParaRutina.push( $('.rut2').attr('hrs') );
-                                                    }
-                                                    if ($('.rut3').text() > 0 ){
-                                                        hrsParaRutina.push( $('.rut3').text() );
-                                                    }
-                                                    else{
-                                                       hrsParaRutina.push( $('.rut3').attr('hrs') );
-                                                    }
-                                                    if ($('.rut4').text() > 0 ){
-                                                        hrsParaRutina.push( $('.rut4').text() );
-                                                    }
-                                                    else{
-                                                       hrsParaRutina.push( $('.rut4').attr('hrs') );
-                                                    }
-                                                    console.log(hrsParaRutina);
-                                                /** Luego hallamos el menor de los números de dicho arreglo. */
-                                                    let menor = Math.min.apply(Math, hrsParaRutina);
-                                                    console.log(menor);
-                                                /** Luego comparamos para hallar a qué rutina corresponde ese número */
-                                                    if  ($('.rut1').attr('hrs') == menor ) {
-                                                       alert('Rutina más cercana: 1.');
-                                                       $('#rutina').html('Se aproximan las actividades para la <b>Rutina 1.</b>');
-                                                       $('#actividadesCercanas').html(rutina1);
-                                                    }
-                                                    if ($('.rut2').attr('hrs') == menor ){
-                                                       alert('Rutina más cercana: 2.');
-                                                       $('#rutina').html('Se aproximan las actividades para la <b>Rutina 2.</b>');
-                                                       $('#actividadesCercanas').html(rutina2);
-                                                    }
-                                                    if ($('.rut3').attr('hrs') == menor  ){
-                                                       alert('Rutina más cercana: 3.');
-                                                       $('#rutina').html('Se aproximan las actividades para la <b>Rutina 3.</b>');
-                                                       $('#actividadesCercanas').html(rutina3);
-                                                    }
-                                                    if ($('.rut4').attr('hrs') == menor ){
-                                                       alert('Rutina más cercana: 4.');
-                                                       $('#rutina').html('Se aproximan las actividades para la <b>Rutina 4.</b>');
-                                                       $('#actividadesCercanas').html(rutina4);
-                                                    }
+                                        function detectarRutinaCercana(){
+                                                        /** Comenzamos por guardar todos los números mayores a cero en un arreglo. */
+                                                        var hrsParaRutina = [];
+                                                        if ($('.rut1').text() > 0 ){
+                                                        hrsParaRutina.push( $('.rut1').text() );
+                                                        } else{
+                                                        hrsParaRutina.push( $('.rut1').attr('hrs') );
+                                                        }
+                                                        if ($('.rut2').text() > 0 ){
+                                                            hrsParaRutina.push( $('.rut2').text() );
+                                                        }
+                                                        else{
+                                                        hrsParaRutina.push( $('.rut2').attr('hrs') );
+                                                        }
+                                                        if ($('.rut3').text() > 0 ){
+                                                            hrsParaRutina.push( $('.rut3').text() );
+                                                        }
+                                                        else{
+                                                        hrsParaRutina.push( $('.rut3').attr('hrs') );
+                                                        }
+                                                        if ($('.rut4').text() > 0 ){
+                                                            hrsParaRutina.push( $('.rut4').text() );
+                                                        }
+                                                        else{
+                                                        hrsParaRutina.push( $('.rut4').attr('hrs') );
+                                                        }
+                                                        console.log(hrsParaRutina);
+                                                    /** Luego hallamos el menor de los números de dicho arreglo. */
+                                                        let menor = Math.min.apply(Math, hrsParaRutina);
+                                                        console.log(menor);
+                                                    /** Luego comparamos para hallar a qué rutina corresponde ese número */
+                                                        if  ($('.rut1').attr('hrs') == menor ) {
+                                                        alert('Rutina más cercana: 1.');
+                                                        $('#rutina').html('Se aproximan las actividades para la <b>Rutina 1.</b>');
+                                                        $('#actividadesCercanas').html(rutina1);
+                                                        }
+                                                        if ($('.rut2').attr('hrs') == menor ){
+                                                        alert('Rutina más cercana: 2.');
+                                                        $('#rutina').html('Se aproximan las actividades para la <b>Rutina 2.</b>');
+                                                        $('#actividadesCercanas').html(rutina2);
+                                                        }
+                                                        if ($('.rut3').attr('hrs') == menor  ){
+                                                        alert('Rutina más cercana: 3.');
+                                                        $('#rutina').html('Se aproximan las actividades para la <b>Rutina 3.</b>');
+                                                        $('#actividadesCercanas').html(rutina3);
+                                                        }
+                                                        if ($('.rut4').attr('hrs') == menor ){
+                                                        alert('Rutina más cercana: 4.');
+                                                        $('#rutina').html('Se aproximan las actividades para la <b>Rutina 4.</b>');
+                                                        $('#actividadesCercanas').html(rutina4);
+                                                        }
+                                            }
+
+                                        function colorear() {
+                                            //console.log(response);
+                                            /** Coloring */
+                                            // ------------ Rutina 1 -----------------------------------------------------//
+                                                if ( $('.rut1').text() >= 75 ){
+                                                    $('.rut1').css('background-color', '#DDF0EC');
+                                                } else if ( $('.rut1').text() < 75 && $('.rut1').text() >= 25 ) {
+                                                    $('.rut1').css('background-color', 'rgba(230,79,19, 0.6)');
+                                                }
+                                                else {
+                                                    $('.rut1').css('background-color', 'rgba(213,11,14,0.6)');
+                                                }
+                                            // ------------ Rutina 2 -----------------------------------------------------//
+                                                if ( $('.rut2').text() >= 150 ){
+                                                    $('.rut2').css('background-color', '#DDF0EC');
+                                                } else if ( $('.rut2').text() < 150 && $('.rut2').text() >= 50 ) {
+                                                    $('.rut2').css('background-color', 'rgba(230,79,19, 0.6)');
+                                                }
+                                                else {
+                                                    $('.rut2').css('background-color', 'rgba(213,11,14,0.6)');
+                                                }
+                                            // ------------ Rutina 3 -----------------------------------------------------//
+                                                if ( $('.rut3').text() >= 300 ){
+                                                    $('.rut3').css('background-color', '#DDF0EC');
+                                                } else if ( $('.rut3').text() < 300 && $('.rut3').text() >= 100 ) {
+                                                    $('.rut3').css('background-color', 'rgba(230,79,19, 0.6)');
+                                                }
+                                                else {
+                                                    $('.rut3').css('background-color', 'rgba(213,11,14,0.6)');
+                                                }
+                                            // ------------ Rutina 4 -----------------------------------------------------//
+                                                if ( $('.rut4').text() >= 600 ){
+                                                    $('.rut4').css('background-color', '#DDF0EC');
+                                                } else if ( $('.rut4').text() < 600 && $('.rut4').text() >= 200 ) {
+                                                    $('.rut4').css('background-color', 'rgba(230,79,19, 0.6)');
+                                                }
+                                                else {
+                                                    $('.rut4').css('background-color', 'rgba(213,11,14,0.6)');
+                                                }
+                                                detectarRutinaCercana();
+                                            /** Hasta arriba coloreábamos, ahora queremos mostrar una lista de las actividades por venir. */
+                                            }
+                                    
+                                        colorear();
+                                        /** Yo matándome and it was so easy */
+                                        $('.col2,.g').height( ($(document).height()  ));
                                         }
 
-                                    function colorear() {
-                                        //console.log(response);
-                                        /** Coloring */
-                                        // ------------ Rutina 1 -----------------------------------------------------//
-                                            if ( $('.rut1').text() >= 75 ){
-                                                $('.rut1').css('background-color', '#DDF0EC');
-                                            } else if ( $('.rut1').text() < 75 && $('.rut1').text() >= 25 ) {
-                                                $('.rut1').css('background-color', 'rgba(230,79,19, 0.6)');
-                                            }
-                                            else {
-                                                $('.rut1').css('background-color', 'rgba(213,11,14,0.6)');
-                                            }
-                                        // ------------ Rutina 2 -----------------------------------------------------//
-                                            if ( $('.rut2').text() >= 150 ){
-                                                $('.rut2').css('background-color', '#DDF0EC');
-                                            } else if ( $('.rut2').text() < 150 && $('.rut2').text() >= 50 ) {
-                                                $('.rut2').css('background-color', 'rgba(230,79,19, 0.6)');
-                                            }
-                                            else {
-                                                $('.rut2').css('background-color', 'rgba(213,11,14,0.6)');
-                                            }
-                                        // ------------ Rutina 3 -----------------------------------------------------//
-                                            if ( $('.rut3').text() >= 300 ){
-                                                $('.rut3').css('background-color', '#DDF0EC');
-                                            } else if ( $('.rut3').text() < 300 && $('.rut3').text() >= 100 ) {
-                                                $('.rut3').css('background-color', 'rgba(230,79,19, 0.6)');
-                                            }
-                                            else {
-                                                $('.rut3').css('background-color', 'rgba(213,11,14,0.6)');
-                                            }
-                                        // ------------ Rutina 4 -----------------------------------------------------//
-                                            if ( $('.rut4').text() >= 600 ){
-                                                $('.rut4').css('background-color', '#DDF0EC');
-                                            } else if ( $('.rut4').text() < 600 && $('.rut4').text() >= 200 ) {
-                                                $('.rut4').css('background-color', 'rgba(230,79,19, 0.6)');
-                                            }
-                                            else {
-                                                $('.rut4').css('background-color', 'rgba(213,11,14,0.6)');
-                                            }
-                                            detectarRutinaCercana();
-                                        /** Hasta arriba coloreábamos, ahora queremos mostrar una lista de las actividades por venir. */
-                                        }
-                                   
-                                    colorear();
-                                    /** Yo matándome and it was so easy */
-                                    $('.col2,.g').height( ($(document).height()  ));
+                                    
                         
                                     
                                 }
                             });
                         }
                         else{
+                            $.ajax({
+                                type: "GET",
+                                url: "php/mantenimientos/getMainRow.php", // Note como getMainRow ahora también calcula y actualiza el cálculo de horas
+                                data: "data",
+                                success: function (response) {
+
+                                    console.log(response);
+                                    let mainRow = JSON.parse(response);
+
+                                    if (mainRow.length == 0){
+                                        alert('El vehículo ' + nombre + ' no ha sido registrado.');
+                                        window.history.back();
+
+                                    }
+
+                                }
+                            });    
                             /** Lets create another AJAX call, so we can solve the FIRST problem */
                             $.ajax({
                                 type: "GET",
@@ -1087,8 +1115,7 @@ $(function(){
            
         
         } 
-          /** Yo matándome and it was so easy */
-        
+          
     
     });
 

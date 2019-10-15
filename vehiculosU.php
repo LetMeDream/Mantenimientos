@@ -135,10 +135,35 @@
                             </div>
                         </div>
 
-                        <div class="col-9">
+                        <div class="col-3 enFuncionDe">
+                            <div class='container conten my-2'>
+
+                                <div class="row">
+
+                                    <div class="col-sm-12">
+                                        <div class="card">
+                                            <form id='enFuncionDe'>
+                                                <select style='width:100%;'  name='horasoKilometros' id='horasoKilometros'>  
+                                                    <option value=''>En función de:</option> 
+                                                    <option value='hrs'>Horas</option> 
+                                                    <option value='kms'>Kilómetros</option> 
+                                                </select> 
+                                            </form>
+                                        </div>
+                                    </div>
+                                    
+                            
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-6">
                         </div>
 
                     </div>
+                    <!-- Segunda hilera para horas -->
                     <div class="row segundaHilera mb-2 relative">
                        
                         <div class="col-6"> 
@@ -182,7 +207,7 @@
                                     <button class='letMeSend mx-auto' id='sendMe' type='button'>Registrar</button>
                                 </div>
 
-                           
+                           </div>
 
                         </div>
 
@@ -193,6 +218,64 @@
                         
                         
                     </div>
+
+                    <!-- Segunda hilera para kilómetros -->
+                    <div class="row segundaHileraKms mb-2 relative">
+                       
+                        <div class="col-6"> 
+                            
+                            <div class="row">
+                                <div class="col-10">
+                                        <div class='conten'>
+
+                                            <form id='eligiendoRutinaKms'>
+                                                <div class='form-group formgroup'>
+
+                                                    <div class="row">
+                                                        <div class="col-6"><input class='inputs' autocomplete='off' type="date" name='fecha' id='fechaKms' ></div>
+
+                                                        <div class="col-6">
+
+                                                            <select style='width:100%;' name='rutinaKms' id='rutinaKms'> 
+                                                                <option value=''>Elegir rutina:</option>
+                                                                <option value='1'>1</option>
+                                                                <option value='2'>2</option>
+                                                                <option value='3'>3</option>
+                                                                <option value='4'>4</option>
+                                                            </select>
+
+                                                        </div>
+
+                                                    
+                                                    </div>
+
+                                                
+
+                                                </div>
+                                                
+                                            </form>
+
+                                        </div>
+                                    
+                                </div>
+
+                                <div class="col-2 ">
+                                    <button class='letMeSend mx-auto' id='sendMeKms' type='button'>Registrar</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                      
+
+                        
+
+                        
+                        
+                    </div>
+                    
+                    <!-- Tercera hilera para horas -->
                     <div class="row terceraHilera mt-2">
                        
                         <div class="col-12"> 
@@ -204,6 +287,36 @@
 
                                         <div class="row">
                                             <div class='col-12' id='actividades'>
+
+                                            </div>
+                                        </div>
+
+                                       
+
+                                    </div>
+                                    
+                                </form>
+
+                            </div>
+
+                           
+
+                        </div>
+                        
+                    </div>
+
+                    <!-- Tercera hilera para kilómetros -->
+                    <div class="row terceraHileraKms mt-2">
+                       
+                        <div class="col-12"> 
+
+                            <div class='container conten'>
+
+                                <form name='eligiendoActividades' id='eligiendoActividades'>
+                                    <div class='form-group formgroup'>
+
+                                        <div class="row">
+                                            <div class='col-12' id='actividadesKms'>
 
                                             </div>
                                         </div>

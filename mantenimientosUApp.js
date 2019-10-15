@@ -23,11 +23,14 @@ $(function(){
     /** For navigation */
     $(document).on('click', '#historial', function(e){
         //e.preventDefault();
-        window.location.href = 'historial.php';
+        window.location.href = 'historialU.php';
 
     });
 
-    
+    $(document).on('click', '#btnKms', function(e){
+        window.location.href= 'mantenimientosUKms.php';
+    });
+
     /** For navigation */
     $(document).on('click', '#register', function(e){
 
@@ -119,8 +122,404 @@ $(function(){
                         /** X = equipos */
                         if (x.length == 0) {
                             console.log('We are not receiving anything.');
-                            alert('No existen mantenimientos registrados para ' + nombre);
-                            window.history.back();
+                            alert('No existen mantenimientos registrados para ' + nombre + ' en función de Horas.');
+                            /* window.history.back(); */
+                            $('#equipo').html(nombre);
+
+                            $.ajax({
+                                type: "GET",
+                                url: "php/mantenimientos/getMainRow.php", // Note como getMainRow ahora también calcula y actualiza el cálculo de horas
+                                data: "data",
+                                success: function (response) {
+
+                                    console.log(response);
+                                    let mainRow = JSON.parse(response);
+
+                                    if (mainRow.length == 0){
+                                        alert('El vehículo ' + nombre + ' no ha sido registrado.\nPor favor, regístrelo.');
+                                        window.history.back();
+
+                                    } else{
+
+                                        let template = ''; let templating = '';
+                                        mainRow.forEach(element => {
+                                        template += 
+                                                `
+                                                    <tr>
+                                                        <td>${element.marca}</td>
+                                                        <td>${element.modelo}</td>
+                                                        <td>${element.serial}</td>
+                                                        <td>${element.arreglo}</td>
+                                                        <td>${element.placa}</td>
+                                                    </tr>                        
+                                                `;
+
+                                        templating += 
+                                                `
+                                                    <tr>
+                                                        <td class='rut1' hrs='${element.hrsReales1}' >${element.rutina1}</td>
+                                                        <td class='rut2' hrs='${element.hrsReales2}' >${element.rutina2}</td>
+                                                        <td class='rut3' hrs='${element.hrsReales3}' >${element.rutina3}</td>
+                                                        <td class='rut4' hrs='${element.hrsReales4}' >${element.rutina4}</td>
+                                                    </tr>
+                                                `
+                                        });
+                                        $('#registros').html(template);
+                                        $('#registrosHoras').html(templating);
+                                    
+                                        /**  */
+                                        let rutina1 = `
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act1'>1)Revisión del nivel de aceite del eje trasero y delantero.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act2'>2)Revisión del nivel de aceite de mandos finales.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act3'>3)Inspeccionar y limpiar filtro de aire primario y válvula de descarga de polvo.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act4'>4)Revisar y limpiar filtro separador de agua de sistemas combustible.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act5'>5)Revisión del nivel de electrolito y de los bornes de la batería.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act6'>6)Revisión de niveles de aceite del sistemas hidráulico y transmisión.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act7'>7)Revisión del nivel de refrigerante. Estado del radiador y mangueras.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act8'>8)Revisión del estado de la(s) correa(s) del motor y comprobar tensión.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act9'>9)Cambio de aceite y del filtro del motor.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act10'>10)Lubricar puntos de pivote de cargadora, excavadora y estabilizadores.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act11'>11)Lubricar crucetas de cardanes.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act12'>12)Revisión del estado y presión de neumáticos. Chequeo del apriete de tuercas.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act13'>13)Chequeo de lineas hidráulicas por fugas, desgastes, etc.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act14'>14)Chequeo del sistema eléctrico y luces.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act15'>15)Limpieza general.</label></div>
+                                                       
+                                                    </div>
+                                                    
+                                                    `;
+                                        let rutina2 = `
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act16'> 16)Revisión de la manguera de admisión de aire.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act17'> 17)Cambios del filtro de aceite del sistema hidráulico.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act18'> 18)Revisión del par de apriete del pasador entre el aguilón y el brazo.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act19'> 19)Revisar funcionamiento de frenos de servicio y estacionamiento.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act20'> 20)Cambios del filtro del combustible y separador de agua.</label></div>
+                                                        
+                                                    </div>
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act21'> 21)Cambios del filtro de la transmisión.</label></div>
+                                                        
+                                                    </div>
+                                                    `
+                                        let rutina3 = `
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act22'> 22)Cambio de aceite de eje delantero y trasero.</label></div>
+                                                        
+                                                    </div> 
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act23'> 23)Revisión y ajuste del vanillaje de control de velocidad del motor.</label></div>
+                                                        
+                                                    </div> 
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act24'> 24)Cambios de aceite y filtro del sistema hidráulico.</label></div>
+                                                        
+                                                    </div> 
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act25'> 25)Limpieza de tubo del respiradero de carter del motor.</label></div>
+                                                        
+                                                    </div> 
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act26'> 26)Cambio de aceite y filtro de la transmisión y convertidor en par.</label></div>
+                                                        
+                                                    </div> 
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act27'> 27)Cambio de aceite de mandos finales</label></div>
+                                                        
+                                                    </div> 
+                                                    <div class='row'>
+                                                        <div class='col-12'><label for='act28'> 28)Sustitución de los elementos de filtro de aire</label></div>
+                                                        
+                                                    </div> 
+
+                                                `;
+                                        let rutina4 = `
+                                                <!-- Rutina 1 -->
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act1'>1)Revisión del nivel de aceite del eje trasero y delantero.</label></div>
+                                                    
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act2'>2)Revisión del nivel de aceite de mandos finales.</label></div>
+                                                    
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act3'>3)Inspeccionar y limpiar filtro de aire primario y válvula de descarga de polvo.</label></div>
+                                                    
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act4'>4)Revisar y limpiar filtro separador de agua de sistemas combustible.</label></div>
+                                                    
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act5'>5)Revisión del nivel de electrolito y de los bornes de la batería.</label></div>
+                                                    
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act6'>6)Revisión de niveles de aceite del sistemas hidráulico y transmisión.</label></div>
+                                                    
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act7'>7)Revisión del nivel de refrigerante. Estado del radiador y mangueras.</label></div>
+                                                    
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act8'>8)Revisión del estado de la(s) correa(s) del motor y comprobar tensión.</label></div>
+                                                    
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act9'>9)Cambio de aceite y del filtro del motor.</label></div>
+                                                
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act10'>10)Lubricar puntos de pivote de cargadora, excavadora y estabilizadores.</label></div>
+                                                    
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act11'>11)Lubricar crucetas de cardanes.</label></div>
+                                                    
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act12'>12)Revisión del estado y presión de neumáticos. Chequeo del apriete de tuercas.</label></div>
+                                                    
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act13'>13)Chequeo de lineas hidráulicas por fugas, desgastes, etc.</label></div>
+                                                    
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act14'>14)Chequeo del sistema eléctrico y luces.</label></div>
+                                                    
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act15'>15)Limpieza general.</label></div>
+                                                    
+                                                </div>
+                                                <!-- Rutina 2 -->
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act16'> 16)Revisión de la manguera de admisión de aire.</label></div>
+                                                    
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act17'> 17)Cambios del filtro de aceite del sistema hidráulico.</label></div>
+                                                    
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act18'> 18)Revisión del par de apriete del pasador entre el aguilón y el brazo.</label></div>
+                                                    
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act19'> 19)Revisar funcionamiento de frenos de servicio y estacionamiento.</label></div>
+                                                    
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act20'> 20)Cambios del filtro del combustible y separador de agua.</label></div>
+                                                    
+                                                </div>
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act21'> 21)Cambios del filtro de la transmisión.</label></div>
+                                                    
+                                                </div>
+                                                <!-- Rutina 3 -->
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act22'> 22)Cambio de aceite de eje delantero y trasero.</label></div>
+                                                    
+                                                </div> 
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act23'> 23)Revisión y ajuste del vanillaje de control de velocidad del motor.</label></div>
+                                                    
+                                                </div> 
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act24'> 24)Cambios de aceite y filtro del sistema hidráulico.</label></div>
+                                                    
+                                                </div> 
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act25'> 25)Limpieza de tubo del respiradero de carter del motor.</label></div>
+                                                    
+                                                </div> 
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act26'> 26)Cambio de aceite y filtro de la transmisión y convertidor en par.</label></div>
+                                                    
+                                                </div> 
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act27'> 27)Cambio de aceite de mandos finales</label></div>
+                                                    
+                                                </div> 
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act28'> 28)Sustitución de los elementos de filtro de aire</label></div>
+                                                    
+                                                </div> 
+                                                <!-- Rutina 4 -->
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act29'> 29)Drenaje y reemplazo de refrigerante motor.</label></div>
+                                                    
+                                                </div> 
+                                                <div class='row'>
+                                                    <div class='col-12'><label for='act30'> 30)Ajuste del juego de válvulas del motor.</label></div>
+                                                    
+                                                </div> 
+                                                `;
+                                        function detectarRutinaCercana(){
+                                                        /** Comenzamos por guardar todos los números mayores a cero en un arreglo. */
+                                                        var hrsParaRutina = [];
+                                                        if ($('.rut1').text() > 0 ){
+                                                        hrsParaRutina.push( $('.rut1').text() );
+                                                        } else{
+                                                        hrsParaRutina.push( $('.rut1').attr('hrs') );
+                                                        }
+                                                        if ($('.rut2').text() > 0 ){
+                                                            hrsParaRutina.push( $('.rut2').text() );
+                                                        }
+                                                        else{
+                                                        hrsParaRutina.push( $('.rut2').attr('hrs') );
+                                                        }
+                                                        if ($('.rut3').text() > 0 ){
+                                                            hrsParaRutina.push( $('.rut3').text() );
+                                                        }
+                                                        else{
+                                                        hrsParaRutina.push( $('.rut3').attr('hrs') );
+                                                        }
+                                                        if ($('.rut4').text() > 0 ){
+                                                            hrsParaRutina.push( $('.rut4').text() );
+                                                        }
+                                                        else{
+                                                        hrsParaRutina.push( $('.rut4').attr('hrs') );
+                                                        }
+                                                        console.log(hrsParaRutina);
+                                                    /** Luego hallamos el menor de los números de dicho arreglo. */
+                                                        let menor = Math.min.apply(Math, hrsParaRutina);
+                                                        console.log(menor);
+                                                    /** Luego comparamos para hallar a qué rutina corresponde ese número */
+                                                        if  ($('.rut1').attr('hrs') == menor ) {
+                                                        alert('Rutina más cercana: 1.');
+                                                        $('#rutina').html('Se aproximan las actividades para la <b>Rutina 1.</b>');
+                                                        $('#actividadesCercanas').html(rutina1);
+                                                        }
+                                                        if ($('.rut2').attr('hrs') == menor ){
+                                                        alert('Rutina más cercana: 2.');
+                                                        $('#rutina').html('Se aproximan las actividades para la <b>Rutina 2.</b>');
+                                                        $('#actividadesCercanas').html(rutina2);
+                                                        }
+                                                        if ($('.rut3').attr('hrs') == menor  ){
+                                                        alert('Rutina más cercana: 3.');
+                                                        $('#rutina').html('Se aproximan las actividades para la <b>Rutina 3.</b>');
+                                                        $('#actividadesCercanas').html(rutina3);
+                                                        }
+                                                        if ($('.rut4').attr('hrs') == menor ){
+                                                        alert('Rutina más cercana: 4.');
+                                                        $('#rutina').html('Se aproximan las actividades para la <b>Rutina 4.</b>');
+                                                        $('#actividadesCercanas').html(rutina4);
+                                                        }
+                                            }
+
+                                        function colorear() {
+                                            //console.log(response);
+                                            /** Coloring */
+                                            // ------------ Rutina 1 -----------------------------------------------------//
+                                                if ( $('.rut1').text() >= 75 ){
+                                                    $('.rut1').css('background-color', '#DDF0EC');
+                                                } else if ( $('.rut1').text() < 75 && $('.rut1').text() >= 25 ) {
+                                                    $('.rut1').css('background-color', 'rgba(230,79,19, 0.6)');
+                                                }
+                                                else {
+                                                    $('.rut1').css('background-color', 'rgba(213,11,14,0.6)');
+                                                }
+                                            // ------------ Rutina 2 -----------------------------------------------------//
+                                                if ( $('.rut2').text() >= 150 ){
+                                                    $('.rut2').css('background-color', '#DDF0EC');
+                                                } else if ( $('.rut2').text() < 150 && $('.rut2').text() >= 50 ) {
+                                                    $('.rut2').css('background-color', 'rgba(230,79,19, 0.6)');
+                                                }
+                                                else {
+                                                    $('.rut2').css('background-color', 'rgba(213,11,14,0.6)');
+                                                }
+                                            // ------------ Rutina 3 -----------------------------------------------------//
+                                                if ( $('.rut3').text() >= 300 ){
+                                                    $('.rut3').css('background-color', '#DDF0EC');
+                                                } else if ( $('.rut3').text() < 300 && $('.rut3').text() >= 100 ) {
+                                                    $('.rut3').css('background-color', 'rgba(230,79,19, 0.6)');
+                                                }
+                                                else {
+                                                    $('.rut3').css('background-color', 'rgba(213,11,14,0.6)');
+                                                }
+                                            // ------------ Rutina 4 -----------------------------------------------------//
+                                                if ( $('.rut4').text() >= 600 ){
+                                                    $('.rut4').css('background-color', '#DDF0EC');
+                                                } else if ( $('.rut4').text() < 600 && $('.rut4').text() >= 200 ) {
+                                                    $('.rut4').css('background-color', 'rgba(230,79,19, 0.6)');
+                                                }
+                                                else {
+                                                    $('.rut4').css('background-color', 'rgba(213,11,14,0.6)');
+                                                }
+                                                detectarRutinaCercana();
+                                            /** Hasta arriba coloreábamos, ahora queremos mostrar una lista de las actividades por venir. */
+                                            }
+                                    
+                                        colorear();
+                                        /** Yo matándome and it was so easy */
+                                        $('.col2,.g').height( ($(document).height()  ));
+                                        }
+
+                                    
+                        
+                                    
+                                }
+                            });
                         }
                         else{
                             /** Lets create another AJAX call, so we can solve the FIRST problem */
@@ -131,7 +530,14 @@ $(function(){
                                 success: function (response) {
                                     console.log(response);
                                     let mainRow = JSON.parse(response);
-                                    let template = ''; let templating = '';
+
+                                    if (mainRow.length == 0){
+                                        alert('El vehículo ' + nombre + ' no ha sido registrado.\nPor favor, regístrelo.');
+                                        window.history.back();
+
+                                    } else {
+                                        
+                                        let template = ''; let templating = '';
                                     mainRow.forEach(element => {
                                         template += 
                                                 `
@@ -503,6 +909,10 @@ $(function(){
                                     colorear();
                                     /** Yo matándome and it was so easy */
                                     $('.col2,.g').height( ($(document).height()  ));
+
+                                    }
+
+                                    
                         
                                     
                                 }

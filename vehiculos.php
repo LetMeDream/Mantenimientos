@@ -174,6 +174,7 @@
                         </div>
 
                     </div>
+
                     <!-- Segunda hilera para horas -->
                     <div class="row segundaHilera mb-2 relative">
                        
@@ -313,8 +314,8 @@
                         
                     </div>
                    
-                   <!-- Tercera hilera para kilómetros -->
-                   <div class="row terceraHileraKms mt-2">
+                    <!-- Tercera hilera para kilómetros -->
+                    <div class="row terceraHileraKms mt-2">
                        
                         <div class="col-12"> 
 
@@ -343,7 +344,10 @@
                         
                     </div>
 
+                    
+
             </div>
+
         </div>  
 
     </div>

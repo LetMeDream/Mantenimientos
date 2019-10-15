@@ -43,19 +43,29 @@
         
         // It wasn't an 'object' but a JSON (hurr)
         $x = json_decode($myRow['attributes']);
-        $first = $x->totalDistance/1000;
-        $distanciaT = $first . ' kms';
+        if($x){
+            $first = $x->totalDistance/1000;
+            $distanciaT = $first . ' kms';
+        } else {
+            $distanciaT = 0;
+        }
+       
         /** Finally, what i had been looking for
          * a JSON holding value from tc_positions
          */
-        $jsonPosition[] = array(
-            'id' => $myRow['deviceid'], 
-            'num' => $myRowx['name'],
-          
-            'velocidad' => $myRow['speed'],
-            'lastUpdate' => $myRowx['lastupdate'],           
-            'distance' => $distanciaT 
-        );
+        if(true){
+
+            $jsonPosition[] = array(
+                'id' => $myRow['deviceid'], 
+                'num' => $myRowx['name'],
+              
+                'velocidad' => $myRow['speed'],
+                'lastUpdate' => $myRowx['lastupdate'],           
+                'distance' => $distanciaT 
+            );
+
+        }
+        
         
         
     } 

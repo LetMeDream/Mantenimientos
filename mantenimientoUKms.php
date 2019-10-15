@@ -71,7 +71,7 @@ require 'php/auth.php';
                         
                         <ul class="navbar-nav ml-auto">
                             <form action="" class="form-inline my-lg-0 lookForm">
-                                <input  autocomplete="off" type="date" id='lookIt' class='form-control in mr-5' placeholder="Buscar...">
+                               <!--  <input  autocomplete="off" type="date" id='lookIt' class='form-control in mr-5' placeholder="Buscar..."> -->
                               
                             </form>
                         </ul>
@@ -93,7 +93,7 @@ require 'php/auth.php';
                         <!--button id='historial' class="btn-block btn-success btnn" >Historial de mantenimientos</button-->
                         <img class='abso_icons' src='css/img/time.svg' width='24px' height="24px"><span id='historial' class='boton  adminBtn'> Historial </span>
                     </div>
-                  
+                   
                     <div class='row my-2 relative'>
                         <span id='logout' class='boton logOut'> Cerrar Sesión </span>
                         <img class='abso_icons logOut' src='css/img/logout.svg'  width='24px' height="24px">
@@ -109,9 +109,9 @@ require 'php/auth.php';
 
                             <div class='conten mt-3'>       
 
-                                    <button id='btnKms' type='button'>Ver en función de Kilómetros</button>
+                                
 
-                                    <h5 class='mt-3'>Mantenimientos registrados para: &nbsp;&nbsp; <span id='equipo'></span> </h5>
+                                        <h5 class='mt-3'>Mantenimiento registrado para: &nbsp;&nbsp; <span id='equipo'></span> </h5>
 
 
                                
@@ -119,7 +119,7 @@ require 'php/auth.php';
                               
 
                               
-                                <table class='table table-sm mt-4'>
+                             <!--    <table class='table table-sm mt-4'>
                                     <thead class='tabledark'>
                                     
 
@@ -152,12 +152,11 @@ require 'php/auth.php';
                                         
                                     </thead>
                                     
-                                    <!-- Id registros, time to shine
-                                    -- In here we will load all of our data got from listingEquipos.php through app.js     -->
+                              
                                     <tbody id='registros'>
                                         
                                     </tbody>
-                                </table>
+                                </table> -->
 
                              
                                 <span>Horas restantes:</span>
@@ -292,7 +291,7 @@ require 'php/auth.php';
                     </div>
 
                   
-
+<!--  Acá solía ir el incoming mantenimiento
                     <div class="row">
 
                         <div class="col-11 mx-auto mt-2">
@@ -320,7 +319,7 @@ require 'php/auth.php';
 
                        </div>
                         
-                    </div>
+                    </div> -->
 
 
 
@@ -343,6 +342,6 @@ require 'php/auth.php';
 
     </div>
 
-    <script src='mantenimientosUApp.js'></script>
+    <script src='mantenimientoUKmsApp.js'></script>
 </body>
 </html>

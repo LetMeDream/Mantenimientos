@@ -48,8 +48,16 @@ $(function(){
 
     
     /** Mostrando seguraHilera al haberse elegido un vehículo */
+    /** Mostrando seguraHilera al haberse elegido un vehículo (En función de) */
     $('#equipos').change(function(){
         let id = $(this).val();
+
+        /** Some fading out*/    
+        $('.segundaHilera,.segundaHileraKms').fadeOut();
+        $('.terceraHilera,.terceraHileraKms').fadeOut();
+        
+        /** And resetings */
+       
 
         console.log(id);
         $.ajax({
@@ -63,9 +71,12 @@ $(function(){
                 
                 vehiculos.forEach(
                     vehiculo => {
-                        //console.log(vehiculo.hs, vehiculo.km);
+                        /** Adding attribute on button for Horas */
                         $('#sendMe').attr('hs', vehiculo.hs);
                         $('#sendMe').attr('km', vehiculo.km);
+                        /** Adding attribute on button for Kilometros */
+                        $('#sendMeKms').attr('hs', vehiculo.hs);
+                        $('#sendMeKms').attr('km', vehiculo.km);
                     }
                 );
             }
@@ -74,21 +85,45 @@ $(function(){
 
 
         if ($('#equipos').val()  != ''){
-            $('.segundaHilera').fadeIn();
+            $('.enFuncionDe').fadeIn();
         } else {
-            $('.segundaHilera').fadeOut();
+            $('.enFuncionDe').fadeOut();
         }
+
+        $('#horasoKilometros').change(function(){
+            if ($('#horasoKilometros').val()  == 'hrs'){
+               
+                $('.segundaHileraKms').fadeOut();
+                $('.terceraHilera,.terceraHileraKms').fadeOut();
+                $('.segundaHilera').fadeIn();
+            } 
+            else if ($('#horasoKilometros').val() == 'kms') {
+
+                $('.segundaHilera').fadeOut();
+                $('.terceraHilera,.terceraHileraKms').fadeOut();
+                $('.segundaHileraKms').fadeIn();
+            } else {
+                $('.terceraHilera,.terceraHileraKms').fadeOut();
+                $('.segundaHilera,.segundaHileraKms').fadeOut();
+                $('.segundaHileraKms').fadeOut();
+            }
+        });
 
 
 
         /** Disabling rutinas y botón de enviar */
-        $('#rutina').attr('disabled', true);
-        $('#sendMe').attr('disabled', true);
-        $('#sendMe').removeClass('letMeSend');
-        $('#sendMe').addClass('disabled');
+        $('#rutina,#rutinaKms').attr('disabled', true);
+        $('#sendMe,#sendMeKms').attr('disabled', true);
+        $('#sendMe,#sendMeKms').removeClass('letMeSend');
+        $('#sendMe,#sendMeKms').addClass('disabled');
+
 
         $('#fecha').change(function(){
             $('#rutina').attr('disabled', false);
+        });
+
+        $('#fechaKms').change(function(){
+            $('#rutinaKms').attr('disabled', false);
         });
         
 
@@ -96,7 +131,7 @@ $(function(){
 
     
 
-
+    /** Añadiendo el mantenimiento desde el primer botón. */
     $(document).on('click', '#sendMe', function(){
        
         /** let actividades */
@@ -373,6 +408,8 @@ $(function(){
             km:$('#sendMe').attr('km'),
             fecha:$('#fecha').val(),
             rutina: $('#rutina').val(),
+
+            enFuncionDe: $('#horasoKilometros').val(),
             
             actividades : actividades,
             comentariosActividades :comentariosActividades
@@ -383,7 +420,7 @@ $(function(){
 
         $.post('php/vehiculos/add.php', pack, function(response){
             
-            
+            console.log(response);
             var answer = JSON.parse(response);
             console.log(answer.ok);
             console.log(answer.error)
@@ -409,7 +446,322 @@ $(function(){
 
        
     });
+    /** Añadiendo el mantenimiento desde el segundo botón. */
+    $(document).on('click', '#sendMeKms', function(){
+       
+        /** let actividades */
+        let actividades = '';
+        /** Y comentarios de estas */
+        let comentariosActividades = ''; 
 
+        
+        /** Hold on for the 30 activities down here */
+        /** First 5 */
+        if ($('#a_1kms').is(":checked")){
+            actividades += ' 1)Revisión del nivel de aceite del eje trasero y delantero.<br>';
+            if ( $('#act1kms').val() != '' ){
+                comentariosActividades += '1) ' + $('#act1kms').val() + '<br>  ';
+            } else {
+                comentariosActividades += '1) Actividad sin observación.<br>';
+            }
+        }
+        if ($('#a_2kms').is(":checked")){
+            actividades += ' 2)Revisión del nivel de aceite de mandos finales.<br>';
+            if ( $('#act2kms').val() != '' ){
+                comentariosActividades += '2)' + $('#act2kms').val() + ' <br> ';
+            } else {
+                comentariosActividades += '2) Actividad sin observación.<br> ';
+            }  
+        }
+        if ($('#a_3kms').is(":checked")){
+            actividades += ' 3)Inspeccionar y limpiar filtro de aire primario y válvula de descarga de polvo.<br>';
+            if ( $('#act3kms').val() != '' ){
+                comentariosActividades += '3)' + $('#act3kms').val() + '<br>  ';
+            } else {
+                comentariosActividades += '3) Actividad sin observación.<br>';
+            }  
+            
+        }
+        if ($('#a_4kms').is(":checked")){
+            actividades += ' 4)Revisar y limpiar filtro separador de agua de sistemas combustible.<br>';
+            if ( $('#act4kms').val() != '' ){
+                comentariosActividades += '4)' + $('#act4kms').val() + '<br>';
+            } else {
+                comentariosActividades += '4) Actividad sin observación.<br>';
+            }  
+           
+        }
+        if ($('#a_5kms').is(":checked")){
+            actividades += ' 5)Revisión del nivel de electrolito y de los bornes de la batería.<br>';
+            if ( $('#act5kms').val() != '' ){
+                comentariosActividades += '5)' + $('#act5kms').val() + '<br>';
+            } else {
+                comentariosActividades += '5) Actividad sin observación.<br>';
+            }  
+        }
+        /** Five more (5-10) */
+        if ($('#a_6kms').is(":checked")){
+            actividades += ' 6)Revisión de niveles de aceite del sistemas hidráulico y transmisión.<br>';
+            if ( $('#act6kms').val() != '' ){
+                comentariosActividades += '6)' + $('#act6kms').val() + '<br>';
+            } else {
+                comentariosActividades += '6) Actividad sin observación.<br>';
+            }  
+        }
+        if ($('#a_7kms').is(":checked")){
+            actividades += ' 7)Revisión del nivel de refrigerante. Estado del radiador y mangueras.<br>';
+            if ( $('#act7kms').val() != '' ){
+                comentariosActividades += '7)' + $('#act7kms').val() + '<br>';
+            } else {
+                comentariosActividades += '7) Actividad sin observación. <br>';
+            }     
+        }
+        if ($('#a_8kms').is(":checked")){
+            actividades += ' 8)Revisión del estado de la(s) correa(s) del motor y comprobar tensión.<br>';
+            if ( $('#act8kms').val() != '' ){
+                comentariosActividades += '8)' + $('#act8kms').val() + '<br>';
+            } else {
+                comentariosActividades += '8) Actividad sin observación. <br> ';
+            }    
+        }
+        if ($('#a_9kms').is(":checked")){
+            actividades += ' 9)Cambio de aceite y del filtro del motor.<br>';
+            if ( $('#act9kms').val() != '' ){
+                comentariosActividades += '9)' + $('#act9kms').val() + '<br>';
+            } else {
+                comentariosActividades += '9) Actividad sin observación. <br> ';
+            }    
+        }
+        if ($('#a_10kms').is(":checked")){
+            actividades += ' 10)Lubricar puntos de pivote de cargadora, excavadora y estabilizadores.<br>';
+            if ( $('#act10kms').val() != '' ){
+                comentariosActividades += '10)' + $('#act10kms').val() + '<br>';
+            } else {
+                comentariosActividades += '10) Actividad sin observación. <br>';
+            }  
+        }
+        /** Five more (10-15)*/
+        if ($('#a_11kms').is(":checked")){
+            actividades += ' 11)Lubricar crucetas de cardanes.<br>';
+            if ( $('#act11kms').val() != '' ){
+                comentariosActividades += '11)' + $('#act11kms').val() + '<br>';
+            } else {
+                comentariosActividades += '11) Actividad sin observación.<br>';
+            } 
+            
+        }
+        if ($('#a_12kms').is(":checked")){
+            actividades += ' 12)Revisión del estado y presión de neumáticos. Chequeo del apriete de tuercas.<br>';
+            if ( $('#act12kms').val() != '' ){
+                comentariosActividades += '12)' + $('#act12kms').val() + '<br>';
+            } else {
+                comentariosActividades += '12) Actividad sin observación. <br>';
+            }   
+        }
+        if ($('#a_13kms').is(":checked")){
+            actividades += ' 13)Chequeo de lineas hidráulicas por fugas, desgastes, etc.<br>';
+            if ( $('#act13kms').val() != '' ){
+                comentariosActividades += '13)' + $('#act13kms').val() + '<br>';
+            } else {
+                comentariosActividades += '13) Actividad sin observación. <br> ';
+            } 
+        }
+        if ($('#a_14kms').is(":checked")){
+            actividades += ' 14)Chequeo del sistema eléctrico y luces.<br>';
+            if ( $('#act14kms').val() != '' ){
+                comentariosActividades += '14)' + $('#act14kms').val() + '<br>';
+            } else {
+                comentariosActividades += '14) Actividad sin observación. <br> ';
+            }           
+        }
+        if ($('#a_15kms').is(":checked")){
+            actividades += ' 15)Limpieza general.<br>';
+            if ( $('#act15kms').val() != '' ){
+                comentariosActividades += '15)' + $('#act15kms').val() + '<br>';
+            } else {
+                comentariosActividades += '15) Actividad sin observación. <br> ';
+            }  
+        }
+        /** Five more (15-20)*/
+        if ($('#a_16kms').is(":checked")){
+            actividades += ' 16)Revisión de la manguera de admisión de aire.<br>';
+            if ( $('#act16kms').val() != '' ){
+                comentariosActividades += '16)' + $('#act16kms').val() + '<br>';
+            } else {
+                comentariosActividades += '16) Actividad sin observación. <br> ';
+            }   
+        }
+        if ($('#a_17kms').is(":checked")){
+            actividades += ' 17)Cambio del filtro de aceite del sistema hidráulico.<br>';
+            if ( $('#act17kms').val() != '' ){
+                comentariosActividades += '17)' + $('#act17kms').val() + '<br>';
+            } else {
+                comentariosActividades += '17) Actividad sin observación.<br>';
+            }  
+        }
+        if ($('#a_18kms').is(":checked")){
+            actividades += ' 18)Revisión del par de apriete del pasador entre el aguijón y el brazo.<br>';
+            if ( $('#act18kms').val() != '' ){
+                comentariosActividades += '18)' + $('#act18kms').val() + '<br>';
+            } else {
+                comentariosActividades += '18) Actividad sin observación.<br>';
+            }       
+        }
+        if ($('#a_19kms').is(":checked")){
+            actividades += ' 19)Revisar funcionamiento de frenos de servicio y estacionamiento.<br>';
+            if ( $('#act19kms').val() != '' ){
+                comentariosActividades += '19)' + $('#act19kms').val() + '<br>';
+            } else {
+                comentariosActividades += '19) Actividad sin observación.<br>';
+            }   
+        }
+        if ($('#a_20kms').is(":checked")){
+            actividades += ' 20)Cambio del filtro del combustible y separador de agua.<br>';
+            if ( $('#act20kms').val() != '' ){
+                comentariosActividades += '20)' + $('#act20kms').val() + '<br>';
+            } else {
+                comentariosActividades += '20) Actividad sin observación.<br>';
+            }   
+        }
+        /** Five more (20-25) */
+        if ($('#a_21kms').is(":checked")){
+            actividades += ' 21)Cambio del filtro de transmisión.<br>';
+            if ( $('#act21kms').val() != '' ){
+                comentariosActividades += '21)' + $('#act21kms').val() + '<br>';
+            } else {
+                comentariosActividades += '21) Actividad sin observación.<br>';
+            }   
+            
+        }
+        if ($('#a_22kms').is(":checked")){
+            actividades += ' 22)Cambio de aceite del eje delantero y trasero.<br>';
+            if ( $('#act22kms').val() != '' ){
+                comentariosActividades += '22)' + $('#act22kms').val() + '<br>';
+            } else {
+                comentariosActividades += '22) Actividad sin observación. <br> ';
+            }  
+            
+        }
+        if ($('#a_23kms').is(":checked")){
+            actividades += ' 23)Revisión y ajuste del varillaje de control de velocidad del motor.<br>';
+            if ( $('#act23kms').val() != '' ){
+                comentariosActividades += '23)' + $('#act23kms').val() + '<br>';
+            } else {
+                comentariosActividades += '23) Actividad sin observación. <br> ';
+            } 
+            
+        }
+        if ($('#a_24kms').is(":checked")){
+            actividades += ' 24)Cambio de aceite y filtro del sistema hidráulico.<br>';
+            if ( $('#act24kms').val() != '' ){
+                comentariosActividades += '24)' + $('#act24kms').val() + '<br>';
+            } else {
+                comentariosActividades += '24) Actividad sin observación. <br> ';
+            } 
+           
+        }
+        if ($('#a_25kms').is(":checked")){
+            actividades += ' 25)Limpieza del tubo del respiradero del carter del motor.<br>';
+            if ( $('#act25kms').val() != '' ){
+                comentariosActividades += '25)' + $('#act25kms').val() + '<br>';
+            } else {
+                comentariosActividades += '25) Actividad sin observación. <br> ';
+            } 
+            
+        }
+        /** Last five up to 30 */
+        if ($('#a_26kms').is(":checked")){
+            actividades += ' 26)Cambio de aceite y filtro de la transmisión y convertidor de par.<br>';
+            if ( $('#act26kms').val() != '' ){
+                comentariosActividades += '26)' + $('#act26kms').val() + '<br>';
+            } else {
+                comentariosActividades += '26) Actividad sin observación. <br> ';
+            }    
+        }
+        if ($('#a_27kms').is(":checked")){
+            actividades += ' 27)Cambio de aceite de mandos finales.<br>';
+            if ( $('#act27kms').val() != '' ){
+                comentariosActividades += '27)' + $('#act27kms').val() + '<br>';
+            } else {
+                comentariosActividades += '27) Actividad sin observación.  <br>';
+            }   
+        }
+        if ($('#a_28kms').is(":checked")){
+            actividades += '28)Sustitución de los elementos del filtro del aire.<br>';
+            if ( $('#act28kms').val() != '' ){
+                comentariosActividades += '28)' + $('#act28kms').val() + '<br>';
+            } else {
+                comentariosActividades += '28) Actividad sin observación. <br> ';
+            }  
+            
+        }
+        if ($('#a_29kms').is(":checked")){
+            actividades += ' 29)Drenaje y reemplazo de refrigerante motor.<br>';
+            if ( $('#act29kms').val() != '' ){
+                comentariosActividades += '29)' + $('#act29kms').val() + '<br>';
+            } else {
+                comentariosActividades += '29) Actividad sin observación. <br> ';
+            }  
+        }
+        if ($('#a_30kms').is(":checked")){
+            actividades += ' 30)Ajuste del juego de válvulas del motor.<br>';
+            if ( $('#act30kms').val() != '' ){
+                comentariosActividades += '30)' + $('#act30kms').val() + '<br>';
+            } else {
+                comentariosActividades += '30) Actividad sin observación. <br> ';
+            } 
+            
+        }
+
+        /** Crearemos un objeto que enviaremos al back */
+        const pack = {
+            //Getting selected OPTION, not value.
+            equipo: $('#equipos option:selected').html(),
+            //We will still need it's value, tho.
+            deviceId: $('#equipos').val(),
+            hs:$('#sendMeKms').attr('hs'),
+            km:$('#sendMeKms').attr('km'),
+            fecha:$('#fechaKms').val(),
+            rutina: $('#rutinaKms').val(),
+
+            enFuncionDe: $('#horasoKilometros').val(),
+            
+            actividades : actividades,
+            comentariosActividades :comentariosActividades
+        }
+        console.log(pack);
+        /** Here we would decide wether it's adding or editing 
+        /* let url = edit === false ? 'php/add.php' : 'php/update.php'; */
+
+        $.post('php/vehiculos/add.php', pack, function(response){
+            
+            
+            var answer = JSON.parse(response);
+            console.log(answer.ok);
+            console.log(answer.error)
+            if (answer.ok){
+                $('#equipos').val('');
+               
+
+                $('#rutinaKms').val('');
+                $('.terceraHileraKms').fadeOut();
+
+                $("#fechaKms[name=fechaKms]").val('');
+
+              
+                $('.segundaHileraKms').fadeOut();
+                $('html, body').animate({scrollTop: '0px'}, 420);
+
+                alert('Mantenimiento registrado');
+                /** Checkpoint */
+                window.location.href = 'mantenimientoUKms.php';
+
+            } 
+       
+        });
+
+       
+    });
 
 
     /** For navigation */
@@ -1748,6 +2100,662 @@ $(function(){
                     $("#act30").fadeIn();
                 }else{
                     $("#act30").fadeOut();
+                }
+            });
+
+    });
+    /** Y lo hare de nuevo, pero con las actividades Kms */
+    /** Una vez elegido el vehículo, mostraremos el formulario que conectará a la bd mantenimientos (tarjetaEquipo) */
+    $('#rutinaKms').change(function(){
+        let rutina1 = `
+                                        <div class='row'>
+                                            <div class='col-7'>
+                                                <label for='a_1kms'>1)Revisar del estado de la(s) correa(s) del motor y comprobar tensión.</label>
+                                            </div>
+                                            <div class='col-2'>
+                                                <input class='checki' id='a_1kms' type='checkbox'>
+                                            </div>
+                                            <div class='col-3'> 
+                                                <textarea id='act1kms' type='text' class='ocultar inputAct' ></textarea>
+                                            </div>
+                                        </div>
+                                        <div class='row'>
+                                            <div class='col-7'>
+                                                <label for='a_2kms'>2)Inspeccionar y limpiar filtro de aire.</label>
+                                            </div>
+                                            <div class='col-2'>
+                                                <input class='checki' id='a_2kms' type='checkbox'>
+                                            </div>
+                                            <div class='col-3'> 
+                                                <textarea id='act2kms' type='text' class='ocultar inputAct' ></textarea>
+                                            </div>
+                                        </div>
+                                        <div class='row'>
+                                            <div class='col-7'>
+                                                <label for='a_3kms'>3)Revisar nivel de electrólito y de los bornes de la batería.</label>
+                                            </div>
+                                            <div class='col-2'>
+                                                <input class='checki' id='a_3kms' type='checkbox'>
+                                            </div>
+                                            <div class='col-3'> 
+                                                <textarea id='act3kms' type='text' class='ocultar inputAct' ></textarea>
+                                            </div>
+                                        </div>
+                                        <div class='row'>
+                                            <div class='col-7'>
+                                                <label for='a_4kms'>4)Chequear niveles de aceite de la caja velocidades automatica  (Si aplica)</label>
+                                            </div>
+                                            <div class='col-2'>
+                                                <input class='checki' id='a_4kms' type='checkbox'>
+                                            </div>
+                                            <div class='col-3'> 
+                                                <textarea id='act4kms' type='text' class='ocultar inputAct' ></textarea>
+                                            </div>
+                                        </div>
+                                        <div class='row'>
+                                            <div class='col-7'>
+                                                <label for='a_5kms'>5)Revisar nivel de refrigerante. Estado del radiador y mangueras</label>
+                                            </div>
+                                            <div class='col-2'>
+                                                <input class='checki' id='a_5kms' type='checkbox'>
+                                            </div>
+                                            <div class='col-3'> 
+                                                <textarea id='act5kms' type='text' class='ocultar inputAct' ></textarea>
+                                            </div>
+                                        </div>
+                                        <div class='row'>
+                                            <div class='col-7'>
+                                                <label for='a_6kms'>6)Revisar estado y presion de inflado de cauchos. Chequeo del apriete de tuercas.</label>
+                                            </div>
+                                            <div class='col-2'>
+                                                <input class='checki' id='a_6kms' type='checkbox'>
+                                            </div>
+                                            <div class='col-3'> 
+                                                <textarea id='act6kms' type='text' class='ocultar inputAct' ></textarea>
+                                            </div>
+                                        </div>
+                                        <div class='row'>
+                                            <div class='col-7'>
+                                                <label for='a_7kms'>7)Cambiar de aceite y del filtro del motor.</label>
+                                            </div>
+                                            <div class='col-2'>
+                                                <input class='checki' id='a_7kms' type='checkbox'>
+                                            </div>
+                                            <div class='col-3'> 
+                                                <textarea id='act7kms' type='text' class='ocultar inputAct' ></textarea>
+                                            </div>
+                                        </div>
+                                        <div class='row'>
+                                            <div class='col-7'>
+                                                <label for='a_8kms'>8)Chequear funcionamiento del sistema electrico, luces e instrumentos</label>
+                                            </div>
+                                            <div class='col-2'>
+                                                <input class='checki' id='a_8kms' type='checkbox'>
+                                            </div>
+                                            <div class='col-3'> 
+                                                <textarea id='act8kms' type='text' class='ocultar inputAct' ></textarea>
+                                            </div>
+                                        </div>
+                                        <div class='row'>
+                                            <div class='col-7'>
+                                                <label for='a_9kms'>9)Chequear frenos de servicio y estacionamiento. </label>
+                                            </div>
+                                            <div class='col-2'>
+                                                <input class='checki' id='a_9kms' type='checkbox'>
+                                            </div>
+                                            <div class='col-3'> 
+                                                <textarea id='act9kms' type='text' class='ocultar inputAct' ></textarea>
+                                            </div>
+                                        </div>
+                                        <div class='row'>
+                                            <div class='col-7'>
+                                                <label for='a_10kms'>10)Chequear fugas de agua, aceite y combustible</label>
+                                            </div>
+                                            <div class='col-2'>
+                                                <input class='checki' id='a_10kms' type='checkbox'>
+                                            </div>
+                                            <div class='col-3'> 
+                                                <textarea id='act10kms' type='text' class='ocultar inputAct' ></textarea>
+                                            </div>
+                                        </div>
+                                        <div class='row'>
+                                            <div class='col-7'>
+                                                <label for='a_11kms'>11)Limpieza General, lavado y engrase.</label>
+                                            </div>
+                                            <div class='col-2'>
+                                                <input class='checki' id='a_11kms' type='checkbox'>
+                                            </div>
+                                            <div class='col-3'> 
+                                                <textarea id='act11kms' type='text' class='ocultar inputAct' ></textarea>
+                                            </div>
+                                        </div>
+                                        
+                                        `;
+        let rutina2 = `
+                            <!-- Rutina 2 -->
+                            <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_12kms'>12)Chequear graduación de embrague (Si Aplica).</label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_12kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act12kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_13kms'>13)Cambiar filtros de combustible.</label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_13kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act13kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_14kms'>14)Realizar alineacion y balanceo cauchos.</label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_14kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act14kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_15kms'>15)Chequear sistema de dirección, falta de ajuste, estado de articulaciones, rotulas, protectores, etc</label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_15kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act15kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_16kms'>16)Chequear sistema de suspensión, condicion de amortiguadores, falta de ajuste en conexiones, etc</label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_16kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act16kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_17kms'>17)Limpiar filtro aire de cabina o antipolen del sistema de A/A </label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_17kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act17kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_18kms'>18)Chequear nivel de aceite de caja de velocidades mecanica (Si Aplica)</label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_18kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act18kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                            </div>
+                        `
+        let rutina3 = `
+                        <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_19kms'>19)Reemplazar filtro de aire</label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_19kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act19kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                        </div>
+                        <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_20kms'>20)Chequear condicion y funcionamiento de alternador y arranque.</label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_20kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act20kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                        </div>
+                        <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_21kms'>21)Reemplazar filtro y aceite de caja de velocidades automatica (Si Aplica).</label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_21kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act21kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                        </div>
+                        <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_22kms'>22)Rotar cauchos .</label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_22kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act22kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                        </div>
+                        <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_23kms'>23)Realizar limpieza y mantenimiento del sistema de frenos. Chequear desgaste de pastillas y bandas.</label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_23kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act23kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                        </div>
+                        <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_24kms'>24)Verificar funciomiento de sistema A/A. Presion de Gas Refrigerante. Reemplazar filtro de aire cabina.</label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_24kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act24kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                        </div>
+
+
+
+                    `;
+        let rutina4 = `
+                        <!-- From now on, rutine 4-->
+                        <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_25kms'>25)Drenaje y reemplazo de refrigerante motor.</label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_25kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act25kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                        </div>
+                        <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_26kms'>26)Ajuste del juego de válvulas del motor. Chequear compresion de motor.</label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_26kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act26kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                        </div>
+                        <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_27kms'>27)Cambiar correa(s) del motor.</label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_27kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act27kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                        </div>
+                        <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_28kms'>28)Reemplazar Bujias. Verificar estado de cables .</label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_28kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act28kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                        </div>
+                        <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_29kms'>29)Chequear sistema de inyección (Si aplica)</label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_29kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act29kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                        </div>
+                        <div class='row'>
+                                <div class='col-8'>
+                                    <label for='a_30kms'>30)Reemplazar aceite de caja de velocidades mecanicas y gomas protectoras.</label>
+                                </div>
+                                <div class='col-1'>
+                                    <input class='checki' id='a_30kms' type='checkbox'>
+                                </div>
+                                <div class='col-3'> 
+                                    <textarea id='act30kms' type='text' class='ocultar inputAct' ></textarea>
+                                </div>
+                        </div>
+            `;
+            
+            
+
+            if( ($('#rutinaKms').val() == '1') ){
+                $('.terceraHileraKms').fadeIn();
+                $('#actividadesKms').html(rutina1);
+                //Trying to keep height
+                $('.g').height($(document).height() + $('.navbar').outerHeight() );
+               
+            }
+            if($('#rutinaKms').val() == '2'){
+                $('.terceraHileraKms').fadeIn();
+                $('#actividadesKms').html(rutina2);
+                //Trying to keep height
+                $('.g').height($(document).height() + $('.navbar').outerHeight() );
+               
+            }
+            if($('#rutinaKms').val() == '3'){
+                $('.terceraHileraKms').fadeIn();
+                $('#actividadesKms').html(rutina3);
+                //Trying to keep height
+                $('.g').height($(document).height() + $('.navbar').outerHeight() );
+               
+            }
+            if($('#rutinaKms').val() == '4'){
+                $('.terceraHileraKms').fadeIn();
+                $('#actividadesKms').html(rutina4);
+                //Trying to keep height
+                $('.g').height($(document).height() + $('.navbar').outerHeight() );
+               
+            }
+            if($('#rutinaKms').val() == ''){
+                $('.terceraHileraKms').fadeOut();
+
+                $("#fechaKms[name=fecha]").val('');
+
+                $('#sendMeKms').attr('disabled', true);
+                $('#sendMeKms').removeClass('letMeSend');
+                $('#sendMeKms').addClass('disabled');
+                
+                //Trying to keep height
+                $('.g').height($(document).height() + $('.navbar').outerHeight() );
+               
+            }
+            /** Trying to enable the button ;-; */
+            $('.checki').change(function(){
+                console.log('pls ;-;');
+                let post = $('.checki:checked').length;
+                if (post > 0){
+                    
+                    $('#sendMeKms').attr('disabled', false);
+                    $('#sendMeKms').removeClass('disabled');
+                    $('#sendMeKms').addClass('letMeSend');
+                    console.log(post);
+                } else {
+                    $('#sendMeKms').attr('disabled', true);
+                    $('#sendMeKms').removeClass('letMeSend');
+                    $('#sendMeKms').addClass('disabled');
+                }
+                
+            });
+            
+
+            /** From doen this point I'll try to make some commentary logic */
+            // Let me begin by detecting checkboxes changes
+            /** Actividad 1 */
+            $('#a_1kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act1kms").fadeIn();
+                    
+                }else{
+                    $("#act1kms").fadeOut();
+                }
+            });
+            /** Actividad 2 */
+            $('#a_2kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act2kms").fadeIn();
+                }else{
+                    $("#act2kms").fadeOut();
+                }
+            });
+            /** Actividad 3 */
+            $('#a_3kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act3kms").fadeIn();
+                }else{
+                    $("#act3kms").fadeOut();
+                }
+            });
+            
+            /** Actividad 4 */
+            $('#a_4kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act4kms").fadeIn();
+                }else{
+                    $("#act4kms").fadeOut();
+                }
+            });
+            /** Actividad 5 */
+            $('#a_5kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act5kms").fadeIn();
+                }else{
+                    $("#act5kms").fadeOut();
+                }
+            });
+            /** Actividad 6 */
+            $('#a_6kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act6kms").fadeIn();
+                }else{
+                    $("#act6kms").fadeOut();
+                }
+            });
+            /** Actividad 7 */
+            $('#a_7kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act7kms").fadeIn();
+                }else{
+                    $("#act7kms").fadeOut();
+                }
+            });            
+            /** Actividad 8 */
+            $('#a_8kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act8kms").fadeIn();
+                }else{
+                    $("#act8kms").fadeOut();
+                }
+            });
+            /** Actividad 9 */
+            $('#a_9kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act9kms").fadeIn();
+                }else{
+                    $("#act9kms").fadeOut();
+                }
+            });
+            /** Actividad 10 */
+            $('#a_10kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act10kms").fadeIn();
+                }else{
+                    $("#act10kms").fadeOut();
+                }
+            });
+            /** Actividad 11 */
+            $('#a_11kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act11kms").fadeIn();
+                }else{
+                    $("#act11kms").fadeOut();
+                }
+            });
+            /** Actividad 12 */
+            $('#a_12kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act12kms").fadeIn();
+                }else{
+                    $("#act12kms").fadeOut();
+                }
+            });
+            /** Actividad 13 */
+            $('#a_13kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act13kms").fadeIn();
+                }else{
+                    $("#act13kms").fadeOut();
+                }
+            });
+            /** Actividad 14 */
+            $('#a_14kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act14kms").fadeIn();
+                }else{
+                    $("#act14kms").fadeOut();
+                }
+            });
+            /** Actividad 15 */
+            $('#a_15kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act15kms").fadeIn();
+                }else{
+                    $("#act15kms").fadeOut();
+                }
+            });
+            /** Actividad 16 */
+            $('#a_16kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act16kms").fadeIn();
+                }else{
+                    $("#act16kms").fadeOut();
+                }
+            });
+            /** Actividad 17 */
+            $('#a_17kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act17kms").fadeIn();
+                }else{
+                    $("#act17kms").fadeOut();
+                }
+            });
+            /** Actividad 18 */
+            $('#a_18kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act18kms").fadeIn();
+                }else{
+                    $("#act18kms").fadeOut();
+                }
+            });
+            /** Actividad 19 */
+            $('#a_19kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act19kms").fadeIn();
+                }else{
+                    $("#act19kms").fadeOut();
+                }
+            });
+            /** Actividad 20 */
+            $('#a_20kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act20kms").fadeIn();
+                }else{
+                    $("#act20kms").fadeOut();
+                }
+            });
+            /** Actividad 21 */
+            $('#a_21kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act21kms").fadeIn();
+                }else{
+                    $("#act21kms").fadeOut();
+                }
+            });
+            /** Actividad 22 */
+            $('#a_22kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act22kms").fadeIn();
+                }else{
+                    $("#act22kms").fadeOut();
+                }
+            });
+            /** Actividad 23 */
+            $('#a_23kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act23kms").fadeIn();
+                }else{
+                    $("#act23kms").fadeOut();
+                }
+            });
+            /** Actividad 21 */
+            $('#a_24kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act24kms").fadeIn();
+                }else{
+                    $("#act24kms").fadeOut();
+                }
+            });
+            /** Actividad 25 */
+            $('#a_25kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act25kms").fadeIn();
+                }else{
+                    $("#act25kms").fadeOut();
+                }
+            });
+            /** Actividad 26 */
+            $('#a_26kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act26kms").fadeIn();
+                }else{
+                    $("#act26kms").fadeOut();
+                }
+            });
+            /** Actividad 27 */
+            $('#a_27kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act27kms").fadeIn();
+                }else{
+                    $("#act27kms").fadeOut();
+                }
+            });
+            /** Actividad 28 */
+            $('#a_28kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act28kms").fadeIn();
+                }else{
+                    $("#act28kms").fadeOut();
+                }
+            });
+            /** Actividad 29 */
+            $('#a_29kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act29kms").fadeIn();
+                }else{
+                    $("#act29kms").fadeOut();
+                }
+            });
+            /** Actividad 30 */
+            $('#a_30kms').change(function(){
+                if($(this).is(':checked')){
+                    $("#act30kms").fadeIn();
+                }else{
+                    $("#act30kms").fadeOut();
                 }
             });
 

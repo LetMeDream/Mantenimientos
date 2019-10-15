@@ -94,7 +94,7 @@ $(function(){
             } 
             else if ($('#horasoKilometros').val() == 'kms') {
 
-                $('.segundaHilera,.segundaHileraKms').fadeOut();
+                $('.segundaHilera').fadeOut();
                 $('.terceraHilera,.terceraHileraKms').fadeOut();
                 $('.segundaHileraKms').fadeIn();
             } else {
@@ -440,8 +440,8 @@ $(function(){
        
     });
 
-     /** Añadiendo el mantenimiento desde el segundo botón (kms) */
-     $(document).on('click', '#sendMeKms', function(){
+    /** Añadiendo el mantenimiento desde el segundo botón (kms) */
+    $(document).on('click', '#sendMeKms', function(){
        
         /** let actividades */
         let actividades = '';
@@ -2103,7 +2103,7 @@ $(function(){
 
     });
     /** Y lo hare de nuevo, pero con las actividades Kms */
-     /** Una vez elegido el vehículo, mostraremos el formulario que conectará a la bd mantenimientos (tarjetaEquipo) */
+    /** Una vez elegido el vehículo, mostraremos el formulario que conectará a la bd mantenimientos (tarjetaEquipo) */
     $('#rutinaKms').change(function(){
         let rutina1 = `
                                         <div class='row'>

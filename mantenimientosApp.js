@@ -122,7 +122,7 @@ $(function(){
                         /** X = equipos */
                         if (x.length == 0) {
                             console.log('We are not receiving anything.');
-                            alert('No existen mantenimientos registrados para ' + nombre);
+                            alert('No existen mantenimientos registrados para ' + nombre + ' en función de Horas.');
                             /* window.history.back(); */
                             $('#equipo').html(nombre);
                             /** Lets create another AJAX call, so we can solve the FIRST problem */
@@ -136,7 +136,7 @@ $(function(){
                                     let mainRow = JSON.parse(response);
 
                                     if (mainRow.length == 0){
-                                        alert('El vehículo ' + nombre + ' no ha sido registrado.');
+                                        alert('El vehículo ' + nombre + ' no ha sido registrado.\nPor favor, regístrelo.');
                                         window.history.back();
 
                                     } else{

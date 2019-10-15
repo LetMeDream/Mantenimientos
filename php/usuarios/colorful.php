@@ -38,7 +38,15 @@
         // get current time
         $now = time();
         //variable que controlará los colores
-        $timeElapsed = ($now-$ss-22350);//error; trust me
+        // Since Ivy is testing, some error handling must be done.
+        if( is_numeric($now) && is_numeric($ss) ){
+            $timeElapsed = ($now-$ss-22350);//error; trust me
+        }else{
+            $timeElapsed = 172801;
+        }
+
+
+
         if ( ($timeElapsed>=86400)&($timeElapsed<=172800) ){
             array_push($timeAlarm, $timeElapsed);
         }

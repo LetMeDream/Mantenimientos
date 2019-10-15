@@ -128,9 +128,10 @@ $(function () {
                     alert('Este usuario no posee ningún dispositivo registrado.')
 
                 } else {
-                    let devices = JSON.parse(response);
                     // Console checking
-                    console.log(devices);
+                    console.log(response);
+                    let devices = JSON.parse(response);
+                    
                     /**Template that will be send to the HTML */
                     let template = '';
                     //
@@ -167,7 +168,7 @@ $(function () {
             
             success: function (response) {
                 setTimeout(function(){
-                    
+                    console.log(response);
                     let dinamica = JSON.parse(response); 
                     console.log(dinamica);        
                     // I don't really know how, but i did it               

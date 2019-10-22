@@ -117,79 +117,79 @@
                 }
                 if($i==6){
                     $x = 24;
-                    $y = 94;
+                    $y = 93;
                     $pdf->SetXY($x, $y); // set the position of the box
                     $pdf->Cell(81,10, $my_row['shortened_description'] , 0, 1, 'C', 0);
                 }
                 if($i==7){
                     $x = 24;
-                    $y = 99;
+                    $y = 98;
                     $pdf->SetXY($x, $y); // set the position of the box
                     $pdf->Cell(81,10, $my_row['shortened_description'] , 0, 1, 'C', 0);
                 }
                 if($i==8){
                     $x = 24;
-                    $y = 104;
+                    $y = 103;
                     $pdf->SetXY($x, $y); // set the position of the box
                     $pdf->Cell(81,10, $my_row['shortened_description'] , 0, 1, 'C', 0);
                 }
                 if($i==9){
                     $x = 24;
-                    $y = 109;
+                    $y = 108;
                     $pdf->SetXY($x, $y); // set the position of the box
                     $pdf->Cell(81,10, $my_row['shortened_description'] , 0, 1, 'C', 0);
                 }
                 if($i==10){
                     $x = 24;
-                    $y = 114;
+                    $y = 113;
                     $pdf->SetXY($x, $y); // set the position of the box
                     $pdf->Cell(81,10, $my_row['shortened_description'] , 0, 1, 'C', 0);
                 }
                 if($i==11){
                     $x = 24;
-                    $y = 119;
+                    $y = 118;
                     $pdf->SetXY($x, $y); // set the position of the box
                     $pdf->Cell(81,10, $my_row['shortened_description'] , 0, 1, 'C', 0);
                 }
                 if($i==12){
                     $x = 24;
-                    $y = 124;
+                    $y = 123;
                     $pdf->SetXY($x, $y); // set the position of the box
                     $pdf->Cell(81,10, $my_row['shortened_description'] , 0, 1, 'C', 0);
                 }
                 if($i==13){
                     $x = 24;
-                    $y = 129;
+                    $y = 128;
                     $pdf->SetXY($x, $y); // set the position of the box
                     $pdf->Cell(81,10, $my_row['shortened_description'] , 0, 1, 'C', 0);
                 }
                 if($i==14){
                     $x = 24;
-                    $y = 134;
+                    $y = 133;
                     $pdf->SetXY($x, $y); // set the position of the box
                     $pdf->Cell(81,10, $my_row['shortened_description'] , 0, 1, 'C', 0);
                 }
                 if($i==15){
                     $x = 24;
-                    $y = 139;
+                    $y = 138;
                     $pdf->SetXY($x, $y); // set the position of the box
                     $pdf->Cell(81,10, $my_row['shortened_description'] , 0, 1, 'C', 0);
                 }
                 if($i==16){
                     $x = 24;
-                    $y = 144;
+                    $y = 143;
                     $pdf->SetXY($x, $y); // set the position of the box
                     $pdf->Cell(81,10, $my_row['shortened_description'] , 0, 1, 'C', 0);
                 }
                 if($i==17){
                     $x = 24;
-                    $y = 149;
+                    $y = 148;
                     $pdf->SetXY($x, $y); // set the position of the box
                     $pdf->Cell(81,10, $my_row['shortened_description'] , 0, 1, 'C', 0);
                 }
                 if($i==18){
                     $x = 24;
-                    $y = 154;
+                    $y = 152;
                     $pdf->SetXY($x, $y); // set the position of the box
                     $pdf->Cell(81,10, $my_row['shortened_description'] , 0, 1, 'C', 0);
                 }

@@ -1,13 +1,13 @@
-<?php 
+<?php
     session_start();
     include('database.php');
 
     $id = $_POST['id'];
 
     $_SESSION['myId'] = $id;
-  
 
-    $sql = "SELECT * FROM tarjetaEquipo WHERE id LIKE '$id' ";
+
+    $sql = "SELECT * FROM mt_records WHERE id LIKE '$id' ";
     $res = mysqli_query($db, $sql);
 
     if(!$res){
@@ -15,10 +15,10 @@
     }
 
 
-    /** Crearemos un arreglo para guardar el objeto JSON que será enviado al front end. 
-     * 
+    /** Crearemos un arreglo para guardar el objeto JSON que será enviado al front end.
+     *
      *  ******        CREACIÓN DEL JSON       ******
-     * 
+     *
     */
     $json = array();
     /** While there's a result */
@@ -55,7 +55,7 @@
             'capacidadTanqueTransmision' => $row['capacidadTanqueTransmision'],
             'capacidadTanqueHidraulico' => $row['capacidadTanqueHidraulico'],
             'observaciones' => $row['observaciones']
-            
+
         );
     }
     /** Lets try to actually create the JSON now then */

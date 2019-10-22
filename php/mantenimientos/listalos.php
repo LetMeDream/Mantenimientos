@@ -9,7 +9,7 @@
     $deviceId = $_SESSION['hoursId'];
 
 
-    $sql= "SELECT * FROM tarjetaEquipo WHERE deviceId LIKE '$deviceId' AND enFuncionDe LIKE 'hrs' ";
+    $sql= "SELECT * FROM mt_records WHERE deviceId LIKE '$deviceId' AND enFuncionDe LIKE 'hrs' ";
     $res = mysqli_query($db, $sql);
     if (!$res){
         die('Querie failed: '. mysqli_error($db));

@@ -8,3 +8,7 @@ php/usuarios/database.php
 php/vehiculos/database.php
 php/vehiculosU/database.php
 php/infoEquipo/database.php
+vendor/
+php/ultimoMantenimiento/vendor/
+php/ultimoMantenimiento/src/
+php/ultimoMantenimiento/fpdf/

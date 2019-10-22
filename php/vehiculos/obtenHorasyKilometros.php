@@ -1,4 +1,4 @@
-<?php 
+<?php
 
     session_start();
     include('database.php');
@@ -13,26 +13,26 @@
     if (!$res){
         die('Querie failed: '. mysqli_error($db));
     }
- 
+
     //Create empty array
     $array = array();
     while($row = mysqli_fetch_array($res)){
         $array[] = array(
             'km' => $row['distanciaRecorrida'],
             'hs' => $row['horasMotor'],
-          
+
             /** So far so good as well */
-           
+
             /** where are we going wrong? */
-         
+
             /** where does Society start to crumble?*/
-           
-             
+
+
              /** (omg) */
         );
     }
     // Get it in a Json before sending it to the front-end
-    $json = json_encode($array); 
+    $json = json_encode($array);
     echo $json;
 
 ?>

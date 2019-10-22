@@ -1,11 +1,11 @@
 
 $(function () {
-    /* Enabling tool tips*/ 
+    /* Enabling tool tips*/
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
-    
-     
+
+
     /** For navigation */
     $(document).on('click', '#historial', function(e){
         //e.preventDefault();
@@ -13,12 +13,12 @@ $(function () {
 
     });
 
-    
+
     /** For navigation */
     $(document).on('click', '#register', function(e){
 
         //e.preventDefault();
-        
+
         window.location.href = 'register_app.php';
 
     });
@@ -34,13 +34,22 @@ $(function () {
     /** Navigating */
      $(document).on('click', '#mantenimientos', function(){
         document.location = 'vehiculos.php';
-    })
+    });
     /** For navigation END*/
     $(document).on('click', '#imprimible1,#imprimible2,#imprimible3,#imprimible4', function(){
         /** Cinco */
         var w = window.open('css/img/formato_mp.pdf');
             w.print();
-        })
+    });
+
+    /** Trying to create a custom PDF  */
+    $(document).on('click', '#imprimibleDetallado', function(){
+        /**  */
+        window.open('php/ultimoMantenimiento/pdfDetallado.php', '_blank');
+
+
+    });
+
 
 
     /** Esto se supone que hará lo mismo que MantenimientosApp. Sólo que únicamente listando el último mantenimiento
@@ -51,7 +60,7 @@ $(function () {
         $.ajax({
             type: "GET",
             url: "php/ultimoMantenimiento/listalo.php",
-            
+
             success: function (response) {
                 console.log(response);
 
@@ -62,68 +71,68 @@ $(function () {
                     equipo = `
                                 <a idHoras=${y.idHoras} href='#' class='gooHoras'>${y.nombre}</a>
                             `;
-        
+
                     equipoSinLink = `
                         ${y.nombre}
                     `;
-        
-        
+
+
                     template += `
-        
+
                     <div class='contenApp my-4'>
                     <div class=''>
                         ${y.fechaIngreso}
                     </div>
-        
-                        
-        
-        
-        
-        
-        
-        
-                        
+
+
+
+
+
+
+
+
+
                         <table class='table table-bordered table-sm' style='margin-top:-0px'>
                             <thead class='tabledark' id='tableWeird'>
-                                <tr>
-                                                    
-                                    <td> Rutina de mantenimiento Nº: ${y.rutina}</td>    
-                        
+                                <tr class='rel'>
+
+                                    <td> Rutina de mantenimiento Nº: ${y.rutina}</td><img id='imprimibleDetallado' class='abs' src='css/img/printer.svg' width='20'>
+
                                 </tr>
-        
+
                             </thead>
-                            
+
                             <!-- Id registros, time to shine
                             -- In here we will load all of our data got from listingEquipos.php through app.js     -->
                             <tbody id='registros2'>
-                                
+
                                 <tr>
-        
+
                                     <td>
                                         <div class='row'>
 
                                             <div class='col'> <b>Actividades:</b><br> ${y.actividades}</div>
                                             <div class='col'> <b>Observaciones:</b><br> ${y.comentariosActividades}</div>
-                                           
-                                           
-                                           
+
+
+
 
                                         </div>
                                         <hr>
                                         <br>
-                                   
+
                                     </td>
-                            
+
                                 </tr>
-                                    
-                                
-        
+
+
+
                             </tbody>
                         </table>
-                    </div>        
-        
+                    </div>
+
                                 `;
-        
+
                 });
                 $('#equipo').html(nombre);
                 //$('#registros').html(template);
@@ -134,13 +143,13 @@ $(function () {
         $.ajax({
             type: "GET",
             url: "php/ultimoMantenimiento/getMainRow.php",
-            
+
             success: function (response) {
                 console.log(response);
                 let mainRow = JSON.parse(response);
                 let aTemplate = ''; let templating = ''; let nombre = '';
                 mainRow.forEach(element => {
-                    aTemplate += 
+                    aTemplate +=
                             `
                                 <tr>
                                     <td>${element.marca}</td>
@@ -148,10 +157,10 @@ $(function () {
                                     <td>${element.serial}</td>
                                     <td>${element.arreglo}</td>
                                     <td>${element.placa}</td>
-                                </tr>                        
+                                </tr>
                             `;
 
-                    templating += 
+                    templating +=
                             `
                                 <tr>
                                     <td class='rut1' hrs='${element.hrsReales1}' >${element.rutina1}</td>
@@ -165,7 +174,7 @@ $(function () {
                 //$('#registros').html(aTemplate);
                 $('#registrosHoras').html(templating);
                 $('#equipo').html(nombre);
-                
+
                 function detectarRutinaCercana(){
                     /** Comenzamos por guardar todos los números mayores a cero en un arreglo. */
                     var hrsParaRutina = [];
@@ -261,19 +270,19 @@ $(function () {
                         detectarRutinaCercana();
                     /** Hasta arriba coloreábamos, ahora queremos mostrar una lista de las actividades por venir. */
                     }
-            
+
                 colorear();
-               
-                
+
+
             }
-            
+
         });
 
-        
-        
+
+
 
     }
     listando();
-    
+
 
 });

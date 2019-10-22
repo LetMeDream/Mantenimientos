@@ -10,7 +10,7 @@
 
     //if there is a value in search
     if($search){
-        $sql = "SELECT * FROM tarjetaEquipo WHERE fechaIngreso LIKE '$search' AND deviceId LIKE '$deviceId' AND enFuncionDe LIKE 'hrs' ";
+        $sql = "SELECT * FROM mt_records WHERE fechaIngreso LIKE '$search' AND deviceId LIKE '$deviceId' AND enFuncionDe LIKE 'hrs' ";
         $result = mysqli_query($db, $sql);
         /** En caso de no haber conexión, habrá error y será mostrado cual fue. */
         if(!$result){

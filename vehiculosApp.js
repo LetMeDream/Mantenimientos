@@ -24,14 +24,14 @@ $(function(){
         $.ajax({
             type: "GET",
             url: "php/vehiculos/fill_equipos.php",
-           
+
             success: function (response) {
-                
+
                 let equipos = JSON.parse(response);
-                /** Parsing the json 
+                /** Parsing the json
                  * And iterating thru it
                 */
-                $.each(equipos, function (indexInArray, valueOfElement) { 
+                $.each(equipos, function (indexInArray, valueOfElement) {
                      $('<option>').val(valueOfElement.deviceId).text(valueOfElement.equipo).appendTo('#equipos');
                 });
             }
@@ -42,28 +42,28 @@ $(function(){
     load();
 
 
-    
+
     /** Mostrando seguraHilera al haberse elegido un vehículo (En función de) */
     $('#equipos').change(function(){
         let id = $(this).val();
 
-        /** Some fading out*/    
+        /** Some fading out*/
         $('.segundaHilera,.segundaHileraKms').fadeOut();
         $('.terceraHilera,.terceraHileraKms').fadeOut();
-        
+
         /** And resetings */
-       
+
 
         console.log(id);
         $.ajax({
             type: "POST",
             url: "php/vehiculos/obtenHorasyKilometros.php",
             data: {id:id},
-            
-           
+
+
             success: function (response) {
                 let vehiculos = JSON.parse(response);
-                
+
                 vehiculos.forEach(
                     vehiculo => {
                         /** Adding attribute on button for Horas */
@@ -87,11 +87,11 @@ $(function(){
 
         $('#horasoKilometros').change(function(){
             if ($('#horasoKilometros').val()  == 'hrs'){
-               
+
                 $('.segundaHileraKms').fadeOut();
                 $('.terceraHilera').fadeOut();
                 $('.segundaHilera').fadeIn();
-            } 
+            }
             else if ($('#horasoKilometros').val() == 'kms') {
 
                 $('.segundaHilera').fadeOut();
@@ -120,23 +120,26 @@ $(function(){
         $('#fechaKms').change(function(){
             $('#rutinaKms').attr('disabled', false);
         });
-        
+
 
     });
 
     /** Añadiendo el mantenimiento desde el primer botón (hrs) */
     $(document).on('click', '#sendMe', function(){
-       
+
         /** let actividades */
         let actividades = '';
+        let array_actividades = [];
         /** Y comentarios de estas */
-        let comentariosActividades = ''; 
+        let comentariosActividades = '';
 
-        
+
         /** Hold on for the 30 activities down here */
         /** First 5 */
         if ($('#a_1').is(":checked")){
             actividades += ' 1)Revisión del nivel de aceite del eje trasero y delantero.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('1');
             if ( $('#act1').val() != '' ){
                 comentariosActividades += '1) ' + $('#act1').val() + '<br>  ';
             } else {
@@ -145,250 +148,308 @@ $(function(){
         }
         if ($('#a_2').is(":checked")){
             actividades += ' 2)Revisión del nivel de aceite de mandos finales.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('2');
             if ( $('#act2').val() != '' ){
                 comentariosActividades += '2)' + $('#act2').val() + ' <br> ';
             } else {
                 comentariosActividades += '2) Actividad sin observación.<br> ';
-            }  
+            }
         }
         if ($('#a_3').is(":checked")){
             actividades += ' 3)Inspeccionar y limpiar filtro de aire primario y válvula de descarga de polvo.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('3');
             if ( $('#act3').val() != '' ){
                 comentariosActividades += '3)' + $('#act3').val() + '<br>  ';
             } else {
                 comentariosActividades += '3) Actividad sin observación.<br>';
-            }  
-            
+            }
+
         }
         if ($('#a_4').is(":checked")){
             actividades += ' 4)Revisar y limpiar filtro separador de agua de sistemas combustible.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('4');
             if ( $('#act4').val() != '' ){
                 comentariosActividades += '4)' + $('#act4').val() + '<br>';
             } else {
                 comentariosActividades += '4) Actividad sin observación.<br>';
-            }  
-           
+            }
+
         }
         if ($('#a_5').is(":checked")){
             actividades += ' 5)Revisión del nivel de electrolito y de los bornes de la batería.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('5');
             if ( $('#act5').val() != '' ){
                 comentariosActividades += '5)' + $('#act5').val() + '<br>';
             } else {
                 comentariosActividades += '5) Actividad sin observación.<br>';
-            }  
+            }
         }
         /** Five more (5-10) */
         if ($('#a_6').is(":checked")){
             actividades += ' 6)Revisión de niveles de aceite del sistemas hidráulico y transmisión.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('6');
             if ( $('#act6').val() != '' ){
                 comentariosActividades += '6)' + $('#act6').val() + '<br>';
             } else {
                 comentariosActividades += '6) Actividad sin observación.<br>';
-            }  
+            }
         }
         if ($('#a_7').is(":checked")){
             actividades += ' 7)Revisión del nivel de refrigerante. Estado del radiador y mangueras.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('7');
             if ( $('#act7').val() != '' ){
                 comentariosActividades += '7)' + $('#act7').val() + '<br>';
             } else {
                 comentariosActividades += '7) Actividad sin observación. <br>';
-            }     
+            }
         }
         if ($('#a_8').is(":checked")){
             actividades += ' 8)Revisión del estado de la(s) correa(s) del motor y comprobar tensión.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('8');
             if ( $('#act8').val() != '' ){
                 comentariosActividades += '8)' + $('#act8').val() + '<br>';
             } else {
                 comentariosActividades += '8) Actividad sin observación. <br> ';
-            }    
+            }
         }
         if ($('#a_9').is(":checked")){
             actividades += ' 9)Cambio de aceite y del filtro del motor.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('9');
             if ( $('#act9').val() != '' ){
                 comentariosActividades += '9)' + $('#act9').val() + '<br>';
             } else {
                 comentariosActividades += '9) Actividad sin observación. <br> ';
-            }    
+            }
         }
         if ($('#a_10').is(":checked")){
             actividades += ' 10)Lubricar puntos de pivote de cargadora, excavadora y estabilizadores.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('10');
             if ( $('#act10').val() != '' ){
                 comentariosActividades += '10)' + $('#act10').val() + '<br>';
             } else {
                 comentariosActividades += '10) Actividad sin observación. <br>';
-            }  
+            }
         }
         /** Five more (10-15)*/
         if ($('#a_11').is(":checked")){
             actividades += ' 11)Lubricar crucetas de cardanes.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('11');
             if ( $('#act11').val() != '' ){
                 comentariosActividades += '11)' + $('#act11').val() + '<br>';
             } else {
                 comentariosActividades += '11) Actividad sin observación.<br>';
-            } 
-            
+            }
+
         }
         if ($('#a_12').is(":checked")){
             actividades += ' 12)Revisión del estado y presión de neumáticos. Chequeo del apriete de tuercas.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('12');
             if ( $('#act12').val() != '' ){
                 comentariosActividades += '12)' + $('#act12').val() + '<br>';
             } else {
                 comentariosActividades += '12) Actividad sin observación. <br>';
-            }   
+            }
         }
         if ($('#a_13').is(":checked")){
             actividades += ' 13)Chequeo de lineas hidráulicas por fugas, desgastes, etc.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('13');
             if ( $('#act13').val() != '' ){
                 comentariosActividades += '13)' + $('#act13').val() + '<br>';
             } else {
                 comentariosActividades += '13) Actividad sin observación. <br> ';
-            } 
+            }
         }
         if ($('#a_14').is(":checked")){
             actividades += ' 14)Chequeo del sistema eléctrico y luces.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('14');
             if ( $('#act14').val() != '' ){
                 comentariosActividades += '14)' + $('#act14').val() + '<br>';
             } else {
                 comentariosActividades += '14) Actividad sin observación. <br> ';
-            }           
+            }
         }
         if ($('#a_15').is(":checked")){
             actividades += ' 15)Limpieza general.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('15');
             if ( $('#act15').val() != '' ){
                 comentariosActividades += '15)' + $('#act15').val() + '<br>';
             } else {
                 comentariosActividades += '15) Actividad sin observación. <br> ';
-            }  
+            }
         }
         /** Five more (15-20)*/
         if ($('#a_16').is(":checked")){
             actividades += ' 16)Revisión de la manguera de admisión de aire.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('16');
             if ( $('#act16').val() != '' ){
                 comentariosActividades += '16)' + $('#act16').val() + '<br>';
             } else {
                 comentariosActividades += '16) Actividad sin observación. <br> ';
-            }   
+            }
         }
         if ($('#a_17').is(":checked")){
             actividades += ' 17)Cambio del filtro de aceite del sistema hidráulico.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('17');
             if ( $('#act17').val() != '' ){
                 comentariosActividades += '17)' + $('#act17').val() + '<br>';
             } else {
                 comentariosActividades += '17) Actividad sin observación.<br>';
-            }  
+            }
         }
         if ($('#a_18').is(":checked")){
             actividades += ' 18)Revisión del par de apriete del pasador entre el aguijón y el brazo.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('18');
             if ( $('#act18').val() != '' ){
                 comentariosActividades += '18)' + $('#act18').val() + '<br>';
             } else {
                 comentariosActividades += '18) Actividad sin observación.<br>';
-            }       
+            }
         }
         if ($('#a_19').is(":checked")){
             actividades += ' 19)Revisar funcionamiento de frenos de servicio y estacionamiento.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('19');
             if ( $('#act19').val() != '' ){
                 comentariosActividades += '19)' + $('#act19').val() + '<br>';
             } else {
                 comentariosActividades += '19) Actividad sin observación.<br>';
-            }   
+            }
         }
         if ($('#a_20').is(":checked")){
             actividades += ' 20)Cambio del filtro del combustible y separador de agua.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('20');
             if ( $('#act20').val() != '' ){
                 comentariosActividades += '20)' + $('#act20').val() + '<br>';
             } else {
                 comentariosActividades += '20) Actividad sin observación.<br>';
-            }   
+            }
         }
         /** Five more (20-25) */
         if ($('#a_21').is(":checked")){
             actividades += ' 21)Cambio del filtro de transmisión.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('21');
             if ( $('#act21').val() != '' ){
                 comentariosActividades += '21)' + $('#act21').val() + '<br>';
             } else {
                 comentariosActividades += '21) Actividad sin observación.<br>';
-            }   
-            
+            }
+
         }
         if ($('#a_22').is(":checked")){
             actividades += ' 22)Cambio de aceite del eje delantero y trasero.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('22');
             if ( $('#act22').val() != '' ){
                 comentariosActividades += '22)' + $('#act22').val() + '<br>';
             } else {
                 comentariosActividades += '22) Actividad sin observación. <br> ';
-            }  
-            
+            }
+
         }
         if ($('#a_23').is(":checked")){
             actividades += ' 23)Revisión y ajuste del varillaje de control de velocidad del motor.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('23');
             if ( $('#act23').val() != '' ){
                 comentariosActividades += '23)' + $('#act23').val() + '<br>';
             } else {
                 comentariosActividades += '23) Actividad sin observación. <br> ';
-            } 
-            
+            }
+
         }
         if ($('#a_24').is(":checked")){
             actividades += ' 24)Cambio de aceite y filtro del sistema hidráulico.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('24');
             if ( $('#act24').val() != '' ){
                 comentariosActividades += '24)' + $('#act24').val() + '<br>';
             } else {
                 comentariosActividades += '24) Actividad sin observación. <br> ';
-            } 
-           
+            }
+
         }
         if ($('#a_25').is(":checked")){
             actividades += ' 25)Limpieza del tubo del respiradero del carter del motor.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('25');
             if ( $('#act25').val() != '' ){
                 comentariosActividades += '25)' + $('#act25').val() + '<br>';
             } else {
                 comentariosActividades += '25) Actividad sin observación. <br> ';
-            } 
-            
+            }
+
         }
         /** Last five up to 30 */
         if ($('#a_26').is(":checked")){
             actividades += ' 26)Cambio de aceite y filtro de la transmisión y convertidor de par.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('26');
             if ( $('#act26').val() != '' ){
                 comentariosActividades += '26)' + $('#act26').val() + '<br>';
             } else {
                 comentariosActividades += '26) Actividad sin observación. <br> ';
-            }    
+            }
         }
         if ($('#a_27').is(":checked")){
             actividades += ' 27)Cambio de aceite de mandos finales.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('27');
             if ( $('#act27').val() != '' ){
                 comentariosActividades += '27)' + $('#act27').val() + '<br>';
             } else {
                 comentariosActividades += '27) Actividad sin observación.  <br>';
-            }   
+            }
         }
         if ($('#a_28').is(":checked")){
             actividades += '28)Sustitución de los elementos del filtro del aire.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('28');
             if ( $('#act28').val() != '' ){
                 comentariosActividades += '28)' + $('#act28').val() + '<br>';
             } else {
                 comentariosActividades += '28) Actividad sin observación. <br> ';
-            }  
-            
+            }
+
         }
         if ($('#a_29').is(":checked")){
             actividades += ' 29)Drenaje y reemplazo de refrigerante motor.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('29');
             if ( $('#act29').val() != '' ){
                 comentariosActividades += '29)' + $('#act29').val() + '<br>';
             } else {
                 comentariosActividades += '29) Actividad sin observación. <br> ';
-            }  
+            }
         }
         if ($('#a_30').is(":checked")){
             actividades += ' 30)Ajuste del juego de válvulas del motor.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('30');
             if ( $('#act30').val() != '' ){
                 comentariosActividades += '30)' + $('#act30').val() + '<br>';
             } else {
                 comentariosActividades += '30) Actividad sin observación. <br> ';
-            } 
-            
+            }
+
         }
 
         /** Crearemos un objeto que enviaremos al back */
@@ -403,56 +464,61 @@ $(function(){
             rutina: $('#rutina').val(),
 
             enFuncionDe: $('#horasoKilometros').val(),
-            
+
+            array_actividades:array_actividades,
+
             actividades : actividades,
             comentariosActividades :comentariosActividades
         }
         console.log(pack);
-        /** Here we would decide wether it's adding or editing 
+        /** Here we would decide wether it's adding or editing
         /* let url = edit === false ? 'php/add.php' : 'php/update.php'; */
 
         $.post('php/vehiculos/add.php', pack, function(response){
-            
-            
+
+            console.log(response);
             var answer = JSON.parse(response);
             console.log(answer.ok);
             console.log(answer.error)
             if (answer.ok){
                 $('#equipos').val('');
-               
+
 
                 $('#rutina').val('');
                 $('.terceraHilera').fadeOut();
 
                 $("#fecha[name=fecha]").val('');
 
-              
+
                 $('.segundaHilera').fadeOut();
                 $('html, body').animate({scrollTop: '0px'}, 420);
 
                 alert('Mantenimiento registrado');
                 window.location.href = 'mantenimiento.php';
 
-            } 
-       
+            }
+
         });
 
-       
+
     });
 
     /** Añadiendo el mantenimiento desde el segundo botón (kms) */
     $(document).on('click', '#sendMeKms', function(){
-       
+
         /** let actividades */
         let actividades = '';
+        let array_actividades = [];
         /** Y comentarios de estas */
-        let comentariosActividades = ''; 
+        let comentariosActividades = '';
 
-        
+
         /** Hold on for the 30 activities down here */
         /** First 5 */
         if ($('#a_1kms').is(":checked")){
-            actividades += ' 1)Revisión del nivel de aceite del eje trasero y delantero.<br>';
+            actividades += ' 1)Revisión del estado de la(s) correa(s) del motor y comprobar tensión<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('31');
             if ( $('#act1kms').val() != '' ){
                 comentariosActividades += '1) ' + $('#act1kms').val() + '<br>  ';
             } else {
@@ -460,251 +526,309 @@ $(function(){
             }
         }
         if ($('#a_2kms').is(":checked")){
-            actividades += ' 2)Revisión del nivel de aceite de mandos finales.<br>';
+            actividades += ' 2)Inspeccionar y limpiar filtro de aire.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('32');
             if ( $('#act2kms').val() != '' ){
                 comentariosActividades += '2)' + $('#act2kms').val() + ' <br> ';
             } else {
                 comentariosActividades += '2) Actividad sin observación.<br> ';
-            }  
+            }
         }
         if ($('#a_3kms').is(":checked")){
-            actividades += ' 3)Inspeccionar y limpiar filtro de aire primario y válvula de descarga de polvo.<br>';
+            actividades += ' 3)Revisar nivel de electrólito y de los bornes de la batería.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('33');
             if ( $('#act3kms').val() != '' ){
                 comentariosActividades += '3)' + $('#act3kms').val() + '<br>  ';
             } else {
                 comentariosActividades += '3) Actividad sin observación.<br>';
-            }  
-            
+            }
+
         }
         if ($('#a_4kms').is(":checked")){
-            actividades += ' 4)Revisar y limpiar filtro separador de agua de sistemas combustible.<br>';
+            actividades += ' 4)Chequear niveles de aceite de la caja velocidades automatica  (Si aplica)<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('34');
             if ( $('#act4kms').val() != '' ){
                 comentariosActividades += '4)' + $('#act4kms').val() + '<br>';
             } else {
                 comentariosActividades += '4) Actividad sin observación.<br>';
-            }  
-           
+            }
+
         }
         if ($('#a_5kms').is(":checked")){
-            actividades += ' 5)Revisión del nivel de electrolito y de los bornes de la batería.<br>';
+            actividades += ' 5)Revisar nivel de refrigerante. Estado del radiador y mangueras.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('35');
             if ( $('#act5kms').val() != '' ){
                 comentariosActividades += '5)' + $('#act5kms').val() + '<br>';
             } else {
                 comentariosActividades += '5) Actividad sin observación.<br>';
-            }  
+            }
         }
         /** Five more (5-10) */
         if ($('#a_6kms').is(":checked")){
-            actividades += ' 6)Revisión de niveles de aceite del sistemas hidráulico y transmisión.<br>';
+            actividades += ' 6)Revisar estado y presión de inflado de cauchos. Chequeo del apriete de tuercas.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('36');
             if ( $('#act6kms').val() != '' ){
                 comentariosActividades += '6)' + $('#act6kms').val() + '<br>';
             } else {
                 comentariosActividades += '6) Actividad sin observación.<br>';
-            }  
+            }
         }
         if ($('#a_7kms').is(":checked")){
-            actividades += ' 7)Revisión del nivel de refrigerante. Estado del radiador y mangueras.<br>';
+            actividades += ' 7)Cambiar de aceite y del filtro del motor.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('37');
             if ( $('#act7kms').val() != '' ){
                 comentariosActividades += '7)' + $('#act7kms').val() + '<br>';
             } else {
                 comentariosActividades += '7) Actividad sin observación. <br>';
-            }     
+            }
         }
         if ($('#a_8kms').is(":checked")){
-            actividades += ' 8)Revisión del estado de la(s) correa(s) del motor y comprobar tensión.<br>';
+            actividades += ' 8)Chequear funcionamiento del sistema electrico, luces e instrumentos.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('38');
             if ( $('#act8kms').val() != '' ){
                 comentariosActividades += '8)' + $('#act8kms').val() + '<br>';
             } else {
                 comentariosActividades += '8) Actividad sin observación. <br> ';
-            }    
+            }
         }
         if ($('#a_9kms').is(":checked")){
-            actividades += ' 9)Cambio de aceite y del filtro del motor.<br>';
+            actividades += ' 9)Chequear frenos de servicio y estacionamiento.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('39');
             if ( $('#act9kms').val() != '' ){
                 comentariosActividades += '9)' + $('#act9kms').val() + '<br>';
             } else {
                 comentariosActividades += '9) Actividad sin observación. <br> ';
-            }    
+            }
         }
         if ($('#a_10kms').is(":checked")){
-            actividades += ' 10)Lubricar puntos de pivote de cargadora, excavadora y estabilizadores.<br>';
+            actividades += ' 10)Chequear fugas de agua, aceite y combustible.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('40');
             if ( $('#act10kms').val() != '' ){
                 comentariosActividades += '10)' + $('#act10kms').val() + '<br>';
             } else {
                 comentariosActividades += '10) Actividad sin observación. <br>';
-            }  
+            }
         }
         /** Five more (10-15)*/
         if ($('#a_11kms').is(":checked")){
-            actividades += ' 11)Lubricar crucetas de cardanes.<br>';
+            actividades += ' 11)Limpieza General, lavado y engrase<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('41');
             if ( $('#act11kms').val() != '' ){
                 comentariosActividades += '11)' + $('#act11kms').val() + '<br>';
             } else {
                 comentariosActividades += '11) Actividad sin observación.<br>';
-            } 
-            
+            }
+
         }
         if ($('#a_12kms').is(":checked")){
-            actividades += ' 12)Revisión del estado y presión de neumáticos. Chequeo del apriete de tuercas.<br>';
+            actividades += ' 12)Chequear graduación de embrague (Si Aplica)<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('42');
             if ( $('#act12kms').val() != '' ){
                 comentariosActividades += '12)' + $('#act12kms').val() + '<br>';
             } else {
                 comentariosActividades += '12) Actividad sin observación. <br>';
-            }   
+            }
         }
         if ($('#a_13kms').is(":checked")){
-            actividades += ' 13)Chequeo de lineas hidráulicas por fugas, desgastes, etc.<br>';
+            actividades += ' 13)Cambiar filtros de combustible.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('43');
             if ( $('#act13kms').val() != '' ){
                 comentariosActividades += '13)' + $('#act13kms').val() + '<br>';
             } else {
                 comentariosActividades += '13) Actividad sin observación. <br> ';
-            } 
+            }
         }
         if ($('#a_14kms').is(":checked")){
-            actividades += ' 14)Chequeo del sistema eléctrico y luces.<br>';
+            actividades += ' 14)Realizar alineacion y balanceo cauchos.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('44');
             if ( $('#act14kms').val() != '' ){
                 comentariosActividades += '14)' + $('#act14kms').val() + '<br>';
             } else {
                 comentariosActividades += '14) Actividad sin observación. <br> ';
-            }           
+            }
         }
         if ($('#a_15kms').is(":checked")){
-            actividades += ' 15)Limpieza general.<br>';
+            actividades += ' 15)Chequear sistema de dirección, falta de ajuste, estado de articulaciones, rotulas, protectores, etc.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('45');
             if ( $('#act15kms').val() != '' ){
                 comentariosActividades += '15)' + $('#act15kms').val() + '<br>';
             } else {
                 comentariosActividades += '15) Actividad sin observación. <br> ';
-            }  
+            }
         }
         /** Five more (15-20)*/
         if ($('#a_16kms').is(":checked")){
-            actividades += ' 16)Revisión de la manguera de admisión de aire.<br>';
+            actividades += ' 16)Chequear sistema de suspensión, condicion de amortiguadores, falta de ajuste en conexiones, etc.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('46');
             if ( $('#act16kms').val() != '' ){
                 comentariosActividades += '16)' + $('#act16kms').val() + '<br>';
             } else {
                 comentariosActividades += '16) Actividad sin observación. <br> ';
-            }   
+            }
         }
         if ($('#a_17kms').is(":checked")){
-            actividades += ' 17)Cambio del filtro de aceite del sistema hidráulico.<br>';
+            actividades += ' 17)Limpiar filtro aire de cabina o antipolen del sistema de A/A.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('47');
             if ( $('#act17kms').val() != '' ){
                 comentariosActividades += '17)' + $('#act17kms').val() + '<br>';
             } else {
                 comentariosActividades += '17) Actividad sin observación.<br>';
-            }  
+            }
         }
         if ($('#a_18kms').is(":checked")){
-            actividades += ' 18)Revisión del par de apriete del pasador entre el aguijón y el brazo.<br>';
+            actividades += ' 18)Chequear nivel de aceite de caja de velocidades mecanica (Si Aplica).<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('48');
             if ( $('#act18kms').val() != '' ){
                 comentariosActividades += '18)' + $('#act18kms').val() + '<br>';
             } else {
                 comentariosActividades += '18) Actividad sin observación.<br>';
-            }       
+            }
         }
         if ($('#a_19kms').is(":checked")){
-            actividades += ' 19)Revisar funcionamiento de frenos de servicio y estacionamiento.<br>';
+            actividades += ' 19)Reemplazar filtro de aire<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('49');
             if ( $('#act19kms').val() != '' ){
                 comentariosActividades += '19)' + $('#act19kms').val() + '<br>';
             } else {
                 comentariosActividades += '19) Actividad sin observación.<br>';
-            }   
+            }
         }
         if ($('#a_20kms').is(":checked")){
-            actividades += ' 20)Cambio del filtro del combustible y separador de agua.<br>';
+            actividades += ' 20)Chequear condición y funcionamiento de alternador y arranque.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('50');
             if ( $('#act20kms').val() != '' ){
                 comentariosActividades += '20)' + $('#act20kms').val() + '<br>';
             } else {
                 comentariosActividades += '20) Actividad sin observación.<br>';
-            }   
+            }
         }
         /** Five more (20-25) */
         if ($('#a_21kms').is(":checked")){
-            actividades += ' 21)Cambio del filtro de transmisión.<br>';
+            actividades += ' 21)Reemplazar filtro y aceite de caja de velocidades automatica (Si Aplica).<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('51');
             if ( $('#act21kms').val() != '' ){
                 comentariosActividades += '21)' + $('#act21kms').val() + '<br>';
             } else {
                 comentariosActividades += '21) Actividad sin observación.<br>';
-            }   
-            
+            }
+
         }
         if ($('#a_22kms').is(":checked")){
-            actividades += ' 22)Cambio de aceite del eje delantero y trasero.<br>';
+            actividades += ' 22)Rotar cauchos.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('52');
             if ( $('#act22kms').val() != '' ){
                 comentariosActividades += '22)' + $('#act22kms').val() + '<br>';
             } else {
                 comentariosActividades += '22) Actividad sin observación. <br> ';
-            }  
-            
+            }
+
         }
         if ($('#a_23kms').is(":checked")){
-            actividades += ' 23)Revisión y ajuste del varillaje de control de velocidad del motor.<br>';
+            actividades += ' 23)Realizar limpieza y mantenimiento del sistema de frenos. Chequear desgaste de pastillas y bandas.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('53');
             if ( $('#act23kms').val() != '' ){
                 comentariosActividades += '23)' + $('#act23kms').val() + '<br>';
             } else {
                 comentariosActividades += '23) Actividad sin observación. <br> ';
-            } 
-            
+            }
+
         }
         if ($('#a_24kms').is(":checked")){
-            actividades += ' 24)Cambio de aceite y filtro del sistema hidráulico.<br>';
+            actividades += ' 24)Verificar funciomiento de sistema A/A. Presion de Gas Refrigerante. Reemplazar filtro de aire cabina.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('54');
             if ( $('#act24kms').val() != '' ){
                 comentariosActividades += '24)' + $('#act24kms').val() + '<br>';
             } else {
                 comentariosActividades += '24) Actividad sin observación. <br> ';
-            } 
-           
+            }
+
         }
         if ($('#a_25kms').is(":checked")){
-            actividades += ' 25)Limpieza del tubo del respiradero del carter del motor.<br>';
+            actividades += ' 25)Drenaje y reemplazo de refrigerante motor.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('55');
             if ( $('#act25kms').val() != '' ){
                 comentariosActividades += '25)' + $('#act25kms').val() + '<br>';
             } else {
                 comentariosActividades += '25) Actividad sin observación. <br> ';
-            } 
-            
+            }
+
         }
         /** Last five up to 30 */
         if ($('#a_26kms').is(":checked")){
-            actividades += ' 26)Cambio de aceite y filtro de la transmisión y convertidor de par.<br>';
+            actividades += ' 26)Ajuste del juego de válvulas del motor. Chequear compresion de motor.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('56');
             if ( $('#act26kms').val() != '' ){
                 comentariosActividades += '26)' + $('#act26kms').val() + '<br>';
             } else {
                 comentariosActividades += '26) Actividad sin observación. <br> ';
-            }    
+            }
         }
         if ($('#a_27kms').is(":checked")){
-            actividades += ' 27)Cambio de aceite de mandos finales.<br>';
+            actividades += ' 27)Cambiar correa(s) del motor.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('57');
             if ( $('#act27kms').val() != '' ){
                 comentariosActividades += '27)' + $('#act27kms').val() + '<br>';
             } else {
                 comentariosActividades += '27) Actividad sin observación.  <br>';
-            }   
+            }
         }
         if ($('#a_28kms').is(":checked")){
-            actividades += '28)Sustitución de los elementos del filtro del aire.<br>';
+            actividades += '28)Reemplazar Bujias. Verificar estado de cables.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('58');
             if ( $('#act28kms').val() != '' ){
                 comentariosActividades += '28)' + $('#act28kms').val() + '<br>';
             } else {
                 comentariosActividades += '28) Actividad sin observación. <br> ';
-            }  
-            
+            }
+
         }
         if ($('#a_29kms').is(":checked")){
-            actividades += ' 29)Drenaje y reemplazo de refrigerante motor.<br>';
+            actividades += ' 29)Chequear sistema de inyección (Si aplica).<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('59');
             if ( $('#act29kms').val() != '' ){
                 comentariosActividades += '29)' + $('#act29kms').val() + '<br>';
             } else {
                 comentariosActividades += '29) Actividad sin observación. <br> ';
-            }  
+            }
         }
         if ($('#a_30kms').is(":checked")){
-            actividades += ' 30)Ajuste del juego de válvulas del motor.<br>';
+            actividades += ' 30)Reemplazar aceite de caja de velocidades mecanicas y gomas protectoras.<br>';
+            /** Pushing activity number when selected checkbox */
+            array_actividades.push('60');
             if ( $('#act30kms').val() != '' ){
                 comentariosActividades += '30)' + $('#act30kms').val() + '<br>';
             } else {
                 comentariosActividades += '30) Actividad sin observación. <br> ';
-            } 
-            
+            }
+
         }
 
         /** Crearemos un objeto que enviaremos al back */
@@ -719,30 +843,32 @@ $(function(){
             rutina: $('#rutinaKms').val(),
 
             enFuncionDe: $('#horasoKilometros').val(),
-            
+
+            array_actividades:array_actividades,
+
             actividades : actividades,
             comentariosActividades :comentariosActividades
         }
         console.log(pack);
-        /** Here we would decide wether it's adding or editing 
+        /** Here we would decide wether it's adding or editing
         /* let url = edit === false ? 'php/add.php' : 'php/update.php'; */
 
         $.post('php/vehiculos/add.php', pack, function(response){
-            
-            
+
+            console.log(response);
             var answer = JSON.parse(response);
             console.log(answer.ok);
-            console.log(answer.error)
+
             if (answer.ok){
                 $('#equipos').val('');
-               
+
 
                 $('#rutinaKms').val('');
                 $('.terceraHileraKms').fadeOut();
 
                 $("#fechaKms[name=fechaKms]").val('');
 
-              
+
                 $('.segundaHileraKms').fadeOut();
                 $('html, body').animate({scrollTop: '0px'}, 420);
 
@@ -750,11 +876,11 @@ $(function(){
                 /** Checkpoint */
                 window.location.href = 'mantenimientoKms.php';
 
-            } 
-       
+            }
+
         });
 
-       
+
     });
 
 
@@ -788,7 +914,7 @@ $(function(){
         document.location = 'datosDeIngreso.php';
     });
 
-   
+
      /** Navigating */
      $(document).on('click', '#vehiculo', function(){
         document.location = 'vehiculos.php';
@@ -986,10 +1112,10 @@ $(function(){
 
 
 
-    /** Una vez elegido el vehículo, mostraremos el formulario que conectará a la bd mantenimientos (tarjetaEquipo) */
+    /** Una vez elegido el vehículo, mostraremos el formulario que conectará a la bd mantenimientos (mt_records) */
     $('#rutina').change(function(){
         let rutina1 = `
-                
+
                         <!-- From here, rutina 1
                         Primeros 15 -->
                     <div class='rut1 rut4'>
@@ -997,17 +1123,17 @@ $(function(){
                             <div class='col-7'>
                                 <label for='a_1'><span class='actividadesClass'>1)Revisión de aceite de eje trasero y delantero(TDM)</span></label>
                             </div>
-                            <div class='col-2'> 
+                            <div class='col-2'>
                                 <input class='checki' id='a_1' type='checkbox'>
                             </div>
 
                             <div class='col-3' >
-                            
+
                                     <textarea id='act1' type='text' class='ocultar inputAct' ></textarea>
-                            
+
                             </div>
-                        
-                    
+
+
                         </div>
                     </div>
                     <div class='rut1 rut4'>
@@ -1021,9 +1147,9 @@ $(function(){
                                 <textarea id='act2' type='text' class='ocultar inputAct' ></textarea>
 
                             </div>
-                        
+
                         </div>
-                        
+
                     </div>
                     <div class='rut1 rut4'>
                         <div class="row">
@@ -1034,7 +1160,7 @@ $(function(){
                             <div class='col-3'>
                                 <textarea id='act3' type='text' class='ocultar inputAct' ></textarea>
                             </div>
-                            
+
                         </div>
                     </div>
                     <div class='rut1 rut4'>
@@ -1046,9 +1172,9 @@ $(function(){
                             <div class='col-3'>
                             <textarea id='act4' type='text' class='ocultar inputAct' ></textarea>
                             </div>
-                            
+
                         </div>
-                        
+
                     </div>
                     <div class='rut1 rut4'>
                         <div class="row">
@@ -1060,10 +1186,10 @@ $(function(){
                             <div class='col-3'>
                                 <textarea id='act5' type='text' class='ocultar inputAct' ></textarea>
                             </div>
-                            
+
 
                         </div>
-                    
+
                     </div>
                     <div class='rut1 rut4'>
                         <div class="row">
@@ -1074,7 +1200,7 @@ $(function(){
                             <div class='col-3'>
                                 <textarea id='act6' type='text' class='ocultar inputAct' ></textarea>
                             </div>
-                            
+
                         </div>
 
                     </div>
@@ -1087,9 +1213,9 @@ $(function(){
                             <div class='col-3'>
                                 <textarea id='act7' type='text' class='ocultar inputAct' ></textarea>
                             </div>
-                            
+
                         </div>
-                        
+
                     </div>
                     <div class='rut1 rut4'>
                         <div class="row">
@@ -1100,9 +1226,9 @@ $(function(){
                             <div class='col-3'>
                             <textarea id='act8' type='text' class='ocultar inputAct' ></textarea>
                             </div>
-                            
+
                         </div>
-                        
+
                     </div>
                     <div class='rut1 rut4'>
                         <div class="row">
@@ -1114,10 +1240,10 @@ $(function(){
                             <div class='col-3'>
                             <textarea id='act9' type='text' class='ocultar inputAct' ></textarea>
                             </div>
-                            
+
 
                         </div>
-                        
+
                     </div>
                     <div class='rut1 rut4'>
                         <div class="row">
@@ -1128,7 +1254,7 @@ $(function(){
                             <div class='col-3'>
                         <textarea id='act10' type='text' class='ocultar inputAct' ></textarea>
                             </div>
-                            
+
                         </div>
 
                     </div>
@@ -1141,9 +1267,9 @@ $(function(){
                             <div class='col-3'>
                             <textarea id='act11' type='text' class='ocultar inputAct' ></textarea>
                             </div>
-                            
+
                         </div>
-                        
+
                     </div>
                     <div class='rut1 rut4'>
                         <div class="row">
@@ -1154,9 +1280,9 @@ $(function(){
                             <div class='col-3'>
                             <textarea id='act12' type='text' class='ocultar inputAct' ></textarea>
                             </div>
-                            
+
                         </div>
-                        
+
                     </div>
                     <div class='rut1 rut4'>
                         <div class="row">
@@ -1168,10 +1294,10 @@ $(function(){
                             <div class='col-3'>
                                 <textarea id='act13' type='text' class='ocultar inputAct' ></textarea>
                             </div>
-                            
+
 
                         </div>
-                        
+
                     </div>
                     <div class='rut1 rut4'>
                         <div class="row">
@@ -1182,9 +1308,9 @@ $(function(){
                             <div class='col-3'>
                             <textarea id='act14' type='text' class='ocultar inputAct' ></textarea>
                             </div>
-                            
+
                         </div>
-                    
+
                     </div>
                     <div class='rut1 rut4'>
                         <div class="row">
@@ -1195,11 +1321,11 @@ $(function(){
                             <div class='col-3'>
                             <textarea id='act15' type='text' class='ocultar inputAct' ></textarea>
                             </div>
-                            
+
                         </div>
-                    
+
                     </div>
-                
+
                 `;
         let rutina2 = `
                 <div class='rut2 rut4'>
@@ -1211,9 +1337,9 @@ $(function(){
                                 <div class='col-3'>
                                     <textarea id='act16' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                     </div>
                         <div class='rut2 rut4'>
                             <div class="row">
@@ -1224,9 +1350,9 @@ $(function(){
                                 <div class='col-3'>
                                     <textarea id='act17' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                        
+
                         </div>
                         <div class='rut2 rut4'>
                             <div class="row">
@@ -1237,9 +1363,9 @@ $(function(){
                                 <div class='col-3'>
                                     <textarea id='act18' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut2 rut4'>
                             <div class="row">
@@ -1251,10 +1377,10 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act19' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
 
                             </div>
-                            
+
                         </div>
                         <div class='rut2 rut4'>
                             <div class="row">
@@ -1265,9 +1391,9 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act20' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut2 rut4'>
                             <div class="row">
@@ -1278,9 +1404,9 @@ $(function(){
                                 <div class='col-3'>
                             <textarea id='act21' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                 </div>
                         `
         let rutina3 = `
@@ -1294,9 +1420,9 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act22' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut3 rut4'>
                             <div class="row">
@@ -1307,9 +1433,9 @@ $(function(){
                                 <div class='col-3'>
                             <textarea id='act23' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut3 rut4'>
                             <div class="row">
@@ -1320,9 +1446,9 @@ $(function(){
                                 <div class='col-3'>
                                     <textarea id='act24' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut3 rut4'>
                             <div class="row">
@@ -1333,9 +1459,9 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act25' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut3 rut4'>
                             <div class="row">
@@ -1346,9 +1472,9 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act26' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut3 rut4'>
                             <div class="row">
@@ -1359,9 +1485,9 @@ $(function(){
                                 <div class='col-3'>
                             <textarea id='act27' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut3 rut4'>
                             <div class="row">
@@ -1372,9 +1498,9 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act28' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <!-- Up to here, rutina 3 -->
 
@@ -1387,17 +1513,17 @@ $(function(){
                                 <div class='col-7'>
                                     <label for='a_1'><span class='actividadesClass'>1)Revisión de aceite de eje trasero y delantero(TDM)</span></label>
                                 </div>
-                                <div class='col-2'> 
+                                <div class='col-2'>
                                     <input class='checki' id='a_1' type='checkbox'>
                                 </div>
 
                                 <div class='col-3' >
-                                
+
                                         <textarea id='act1' type='text' class='ocultar inputAct' ></textarea>
-                                
+
                                 </div>
-                            
-                        
+
+
                             </div>
                         </div>
                         <div class='rut1 rut4'>
@@ -1411,9 +1537,9 @@ $(function(){
                                     <textarea id='act2' type='text' class='ocultar inputAct' ></textarea>
 
                                 </div>
-                            
+
                             </div>
-                            
+
                         </div>
                         <div class='rut1 rut4'>
                             <div class="row">
@@ -1424,7 +1550,7 @@ $(function(){
                                 <div class='col-3'>
                                     <textarea id='act3' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <div class='rut1 rut4'>
@@ -1436,9 +1562,9 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act4' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut1 rut4'>
                             <div class="row">
@@ -1450,10 +1576,10 @@ $(function(){
                                 <div class='col-3'>
                                     <textarea id='act5' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
 
                             </div>
-                        
+
                         </div>
                         <div class='rut1 rut4'>
                             <div class="row">
@@ -1464,7 +1590,7 @@ $(function(){
                                 <div class='col-3'>
                                     <textarea id='act6' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
 
                         </div>
@@ -1477,9 +1603,9 @@ $(function(){
                                 <div class='col-3'>
                                     <textarea id='act7' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut1 rut4'>
                             <div class="row">
@@ -1490,9 +1616,9 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act8' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut1 rut4'>
                             <div class="row">
@@ -1504,10 +1630,10 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act9' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
 
                             </div>
-                            
+
                         </div>
                         <div class='rut1 rut4'>
                             <div class="row">
@@ -1518,7 +1644,7 @@ $(function(){
                                 <div class='col-3'>
                             <textarea id='act10' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
 
                         </div>
@@ -1531,9 +1657,9 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act11' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut1 rut4'>
                             <div class="row">
@@ -1544,9 +1670,9 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act12' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut1 rut4'>
                             <div class="row">
@@ -1558,10 +1684,10 @@ $(function(){
                                 <div class='col-3'>
                                     <textarea id='act13' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
 
                             </div>
-                            
+
                         </div>
                         <div class='rut1 rut4'>
                             <div class="row">
@@ -1572,9 +1698,9 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act14' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                        
+
                         </div>
                         <div class='rut1 rut4'>
                             <div class="row">
@@ -1585,11 +1711,11 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act15' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                        
+
                         </div>
-                        
+
                         <!-- Up to here, rutina 1 -->
                         <!-- From now on, rutina 2 -->
                         <div class='rut2 rut4'>
@@ -1601,9 +1727,9 @@ $(function(){
                                 <div class='col-3'>
                                     <textarea id='act16' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut2 rut4'>
                             <div class="row">
@@ -1614,9 +1740,9 @@ $(function(){
                                 <div class='col-3'>
                                     <textarea id='act17' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                        
+
                         </div>
                         <div class='rut2 rut4'>
                             <div class="row">
@@ -1627,9 +1753,9 @@ $(function(){
                                 <div class='col-3'>
                                     <textarea id='act18' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut2 rut4'>
                             <div class="row">
@@ -1641,10 +1767,10 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act19' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
 
                             </div>
-                            
+
                         </div>
                         <div class='rut2 rut4'>
                             <div class="row">
@@ -1655,9 +1781,9 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act20' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut2 rut4'>
                             <div class="row">
@@ -1668,9 +1794,9 @@ $(function(){
                                 <div class='col-3'>
                             <textarea id='act21' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <!-- From now on, rutine 3-->
                         <div class='rut3 rut4'>
@@ -1682,9 +1808,9 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act22' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut3 rut4'>
                             <div class="row">
@@ -1695,9 +1821,9 @@ $(function(){
                                 <div class='col-3'>
                             <textarea id='act23' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut3 rut4'>
                             <div class="row">
@@ -1708,9 +1834,9 @@ $(function(){
                                 <div class='col-3'>
                                     <textarea id='act24' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut3 rut4'>
                             <div class="row">
@@ -1721,9 +1847,9 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act25' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut3 rut4'>
                             <div class="row">
@@ -1734,9 +1860,9 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act26' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut3 rut4'>
                             <div class="row">
@@ -1747,9 +1873,9 @@ $(function(){
                                 <div class='col-3'>
                             <textarea id='act27' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <div class='rut3 rut4'>
                             <div class="row">
@@ -1760,9 +1886,9 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act28' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
                         <!-- Up to here, rutina 3 -->
                         <!-- From now on, rutine 4-->
@@ -1775,9 +1901,9 @@ $(function(){
                                 <div class='col-3'>
                                 <textarea id='act29' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                            
+
                             </div>
-                            
+
                         </div>
                         <div class='rut4'>
                             <div class="row">
@@ -1788,41 +1914,41 @@ $(function(){
                                 <div class='col-3'>
                                     <textarea id='act30' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
-                                
+
                             </div>
-                            
+
                         </div>
             `;
-            
-            
+
+
 
             if( ($('#rutina').val() == '1') ){
                 $('.terceraHilera').fadeIn();
                 $('#actividades').html(rutina1);
                 //Trying to keep height
                 $('.g').height($(document).height() + $('.navbar').outerHeight() );
-               
+
             }
             if($('#rutina').val() == '2'){
                 $('.terceraHilera').fadeIn();
                 $('#actividades').html(rutina2);
                 //Trying to keep height
                 $('.g').height($(document).height() + $('.navbar').outerHeight() );
-               
+
             }
             if($('#rutina').val() == '3'){
                 $('.terceraHilera').fadeIn();
                 $('#actividades').html(rutina3);
                 //Trying to keep height
                 $('.g').height($(document).height() + $('.navbar').outerHeight() );
-               
+
             }
             if($('#rutina').val() == '4'){
                 $('.terceraHilera').fadeIn();
                 $('#actividades').html(rutina4);
                 //Trying to keep height
                 $('.g').height($(document).height() + $('.navbar').outerHeight() );
-               
+
             }
             if($('#rutina').val() == ''){
                 $('.terceraHilera').fadeOut();
@@ -1832,17 +1958,17 @@ $(function(){
                 $('#sendMe').attr('disabled', true);
                 $('#sendMe').removeClass('letMeSend');
                 $('#sendMe').addClass('disabled');
-                
+
                 //Trying to keep height
                 $('.g').height($(document).height() + $('.navbar').outerHeight() );
-               
+
             }
             /** Trying to enable the button ;-; */
             $('.checki').change(function(){
                 console.log('pls ;-;');
                 let post = $('.checki:checked').length;
                 if (post > 0){
-                    
+
                     $('#sendMe').attr('disabled', false);
                     $('#sendMe').removeClass('disabled');
                     $('#sendMe').addClass('letMeSend');
@@ -1852,9 +1978,9 @@ $(function(){
                     $('#sendMe').removeClass('letMeSend');
                     $('#sendMe').addClass('disabled');
                 }
-                
+
             });
-            
+
 
             /** From doen this point I'll try to make some commentary logic */
             // Let me begin by detecting checkboxes changes
@@ -1862,7 +1988,7 @@ $(function(){
             $('#a_1').change(function(){
                 if($(this).is(':checked')){
                     $("#act1").fadeIn();
-                    
+
                 }else{
                     $("#act1").fadeOut();
                 }
@@ -1883,7 +2009,7 @@ $(function(){
                     $("#act3").fadeOut();
                 }
             });
-            
+
             /** Actividad 4 */
             $('#a_4').change(function(){
                 if($(this).is(':checked')){
@@ -1915,7 +2041,7 @@ $(function(){
                 }else{
                     $("#act7").fadeOut();
                 }
-            });            
+            });
             /** Actividad 8 */
             $('#a_8').change(function(){
                 if($(this).is(':checked')){
@@ -2103,7 +2229,7 @@ $(function(){
 
     });
     /** Y lo hare de nuevo, pero con las actividades Kms */
-    /** Una vez elegido el vehículo, mostraremos el formulario que conectará a la bd mantenimientos (tarjetaEquipo) */
+    /** Una vez elegido el vehículo, mostraremos el formulario que conectará a la bd mantenimientos (mt_records) */
     $('#rutinaKms').change(function(){
         let rutina1 = `
                                         <div class='row'>
@@ -2113,7 +2239,7 @@ $(function(){
                                             <div class='col-2'>
                                                 <input class='checki' id='a_1kms' type='checkbox'>
                                             </div>
-                                            <div class='col-3'> 
+                                            <div class='col-3'>
                                                 <textarea id='act1kms' type='text' class='ocultar inputAct' ></textarea>
                                             </div>
                                         </div>
@@ -2124,7 +2250,7 @@ $(function(){
                                             <div class='col-2'>
                                                 <input class='checki' id='a_2kms' type='checkbox'>
                                             </div>
-                                            <div class='col-3'> 
+                                            <div class='col-3'>
                                                 <textarea id='act2kms' type='text' class='ocultar inputAct' ></textarea>
                                             </div>
                                         </div>
@@ -2135,7 +2261,7 @@ $(function(){
                                             <div class='col-2'>
                                                 <input class='checki' id='a_3kms' type='checkbox'>
                                             </div>
-                                            <div class='col-3'> 
+                                            <div class='col-3'>
                                                 <textarea id='act3kms' type='text' class='ocultar inputAct' ></textarea>
                                             </div>
                                         </div>
@@ -2146,7 +2272,7 @@ $(function(){
                                             <div class='col-2'>
                                                 <input class='checki' id='a_4kms' type='checkbox'>
                                             </div>
-                                            <div class='col-3'> 
+                                            <div class='col-3'>
                                                 <textarea id='act4kms' type='text' class='ocultar inputAct' ></textarea>
                                             </div>
                                         </div>
@@ -2157,7 +2283,7 @@ $(function(){
                                             <div class='col-2'>
                                                 <input class='checki' id='a_5kms' type='checkbox'>
                                             </div>
-                                            <div class='col-3'> 
+                                            <div class='col-3'>
                                                 <textarea id='act5kms' type='text' class='ocultar inputAct' ></textarea>
                                             </div>
                                         </div>
@@ -2168,7 +2294,7 @@ $(function(){
                                             <div class='col-2'>
                                                 <input class='checki' id='a_6kms' type='checkbox'>
                                             </div>
-                                            <div class='col-3'> 
+                                            <div class='col-3'>
                                                 <textarea id='act6kms' type='text' class='ocultar inputAct' ></textarea>
                                             </div>
                                         </div>
@@ -2179,7 +2305,7 @@ $(function(){
                                             <div class='col-2'>
                                                 <input class='checki' id='a_7kms' type='checkbox'>
                                             </div>
-                                            <div class='col-3'> 
+                                            <div class='col-3'>
                                                 <textarea id='act7kms' type='text' class='ocultar inputAct' ></textarea>
                                             </div>
                                         </div>
@@ -2190,7 +2316,7 @@ $(function(){
                                             <div class='col-2'>
                                                 <input class='checki' id='a_8kms' type='checkbox'>
                                             </div>
-                                            <div class='col-3'> 
+                                            <div class='col-3'>
                                                 <textarea id='act8kms' type='text' class='ocultar inputAct' ></textarea>
                                             </div>
                                         </div>
@@ -2201,7 +2327,7 @@ $(function(){
                                             <div class='col-2'>
                                                 <input class='checki' id='a_9kms' type='checkbox'>
                                             </div>
-                                            <div class='col-3'> 
+                                            <div class='col-3'>
                                                 <textarea id='act9kms' type='text' class='ocultar inputAct' ></textarea>
                                             </div>
                                         </div>
@@ -2212,7 +2338,7 @@ $(function(){
                                             <div class='col-2'>
                                                 <input class='checki' id='a_10kms' type='checkbox'>
                                             </div>
-                                            <div class='col-3'> 
+                                            <div class='col-3'>
                                                 <textarea id='act10kms' type='text' class='ocultar inputAct' ></textarea>
                                             </div>
                                         </div>
@@ -2223,11 +2349,11 @@ $(function(){
                                             <div class='col-2'>
                                                 <input class='checki' id='a_11kms' type='checkbox'>
                                             </div>
-                                            <div class='col-3'> 
+                                            <div class='col-3'>
                                                 <textarea id='act11kms' type='text' class='ocultar inputAct' ></textarea>
                                             </div>
                                         </div>
-                                        
+
                                         `;
         let rutina2 = `
                             <!-- Rutina 2 -->
@@ -2238,7 +2364,7 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_12kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act12kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                             </div>
@@ -2249,7 +2375,7 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_13kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act13kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                             </div>
@@ -2260,7 +2386,7 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_14kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act14kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                             </div>
@@ -2271,7 +2397,7 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_15kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act15kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                             </div>
@@ -2282,7 +2408,7 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_16kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act16kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                             </div>
@@ -2293,7 +2419,7 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_17kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act17kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                             </div>
@@ -2304,7 +2430,7 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_18kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act18kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                             </div>
@@ -2317,7 +2443,7 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_19kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act19kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                         </div>
@@ -2328,7 +2454,7 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_20kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act20kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                         </div>
@@ -2339,7 +2465,7 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_21kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act21kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                         </div>
@@ -2350,7 +2476,7 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_22kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act22kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                         </div>
@@ -2361,7 +2487,7 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_23kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act23kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                         </div>
@@ -2372,7 +2498,7 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_24kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act24kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                         </div>
@@ -2389,7 +2515,7 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_25kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act25kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                         </div>
@@ -2400,7 +2526,7 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_26kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act26kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                         </div>
@@ -2411,7 +2537,7 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_27kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act27kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                         </div>
@@ -2422,7 +2548,7 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_28kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act28kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                         </div>
@@ -2433,7 +2559,7 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_29kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act29kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                         </div>
@@ -2444,41 +2570,41 @@ $(function(){
                                 <div class='col-1'>
                                     <input class='checki' id='a_30kms' type='checkbox'>
                                 </div>
-                                <div class='col-3'> 
+                                <div class='col-3'>
                                     <textarea id='act30kms' type='text' class='ocultar inputAct' ></textarea>
                                 </div>
                         </div>
             `;
-            
-            
+
+
 
             if( ($('#rutinaKms').val() == '1') ){
                 $('.terceraHileraKms').fadeIn();
                 $('#actividadesKms').html(rutina1);
                 //Trying to keep height
                 $('.g').height($(document).height() + $('.navbar').outerHeight() );
-               
+
             }
             if($('#rutinaKms').val() == '2'){
                 $('.terceraHileraKms').fadeIn();
                 $('#actividadesKms').html(rutina2);
                 //Trying to keep height
                 $('.g').height($(document).height() + $('.navbar').outerHeight() );
-               
+
             }
             if($('#rutinaKms').val() == '3'){
                 $('.terceraHileraKms').fadeIn();
                 $('#actividadesKms').html(rutina3);
                 //Trying to keep height
                 $('.g').height($(document).height() + $('.navbar').outerHeight() );
-               
+
             }
             if($('#rutinaKms').val() == '4'){
                 $('.terceraHileraKms').fadeIn();
                 $('#actividadesKms').html(rutina4);
                 //Trying to keep height
                 $('.g').height($(document).height() + $('.navbar').outerHeight() );
-               
+
             }
             if($('#rutinaKms').val() == ''){
                 $('.terceraHileraKms').fadeOut();
@@ -2488,17 +2614,17 @@ $(function(){
                 $('#sendMeKms').attr('disabled', true);
                 $('#sendMeKms').removeClass('letMeSend');
                 $('#sendMeKms').addClass('disabled');
-                
+
                 //Trying to keep height
                 $('.g').height($(document).height() + $('.navbar').outerHeight() );
-               
+
             }
             /** Trying to enable the button ;-; */
             $('.checki').change(function(){
                 console.log('pls ;-;');
                 let post = $('.checki:checked').length;
                 if (post > 0){
-                    
+
                     $('#sendMeKms').attr('disabled', false);
                     $('#sendMeKms').removeClass('disabled');
                     $('#sendMeKms').addClass('letMeSend');
@@ -2508,9 +2634,9 @@ $(function(){
                     $('#sendMeKms').removeClass('letMeSend');
                     $('#sendMeKms').addClass('disabled');
                 }
-                
+
             });
-            
+
 
             /** From doen this point I'll try to make some commentary logic */
             // Let me begin by detecting checkboxes changes
@@ -2518,7 +2644,7 @@ $(function(){
             $('#a_1kms').change(function(){
                 if($(this).is(':checked')){
                     $("#act1kms").fadeIn();
-                    
+
                 }else{
                     $("#act1kms").fadeOut();
                 }
@@ -2539,7 +2665,7 @@ $(function(){
                     $("#act3kms").fadeOut();
                 }
             });
-            
+
             /** Actividad 4 */
             $('#a_4kms').change(function(){
                 if($(this).is(':checked')){
@@ -2571,7 +2697,7 @@ $(function(){
                 }else{
                     $("#act7kms").fadeOut();
                 }
-            });            
+            });
             /** Actividad 8 */
             $('#a_8kms').change(function(){
                 if($(this).is(':checked')){
@@ -2759,7 +2885,7 @@ $(function(){
 
     });
 
-    
+
 
     /** Logic for the filtering process */
     $('#lookIt').keyup(function () {

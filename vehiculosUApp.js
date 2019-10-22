@@ -991,7 +991,7 @@ $(function(){
 
 
 
-    /** Una vez elegido el vehículo, mostraremos el formulario que conectará a la bd mantenimientos (tarjetaEquipo) */
+    /** Una vez elegido el vehículo, mostraremos el formulario que conectará a la bd mantenimientos (mt_records) */
     $('#rutina').change(function(){
         let rutina1 = `
                 
@@ -2105,7 +2105,7 @@ $(function(){
 
     });
     /** Y lo hare de nuevo, pero con las actividades Kms */
-    /** Una vez elegido el vehículo, mostraremos el formulario que conectará a la bd mantenimientos (tarjetaEquipo) */
+    /** Una vez elegido el vehículo, mostraremos el formulario que conectará a la bd mantenimientos (mt_records) */
     $('#rutinaKms').change(function(){
         let rutina1 = `
                                         <div class='row'>

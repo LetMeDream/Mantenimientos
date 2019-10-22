@@ -1,11 +1,11 @@
 
 $(function () {
-    /* Enabling tool tips*/ 
+    /* Enabling tool tips*/
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
-    
-     
+
+
     /** For navigation */
     $(document).on('click', '#historial', function(e){
         //e.preventDefault();
@@ -13,12 +13,12 @@ $(function () {
 
     });
 
-    
+
     /** For navigation */
     $(document).on('click', '#register', function(e){
 
         //e.preventDefault();
-        
+
         window.location.href = 'register_app.php';
 
     });
@@ -40,7 +40,16 @@ $(function () {
         /** Cinco */
         var w = window.open('css/img/formato_mp.pdf');
             w.print();
-        })
+    });
+
+    /** Trying to create a custom PDF  */
+    $(document).on('click', '#imprimibleDetallado', function(){
+        /**  */
+        window.open('php/ultimoMantenimiento/pdfDetalladoKms.php', '_blank');
+
+
+    });
+
 
 
     /** Esto se supone que hará lo mismo que MantenimientosApp. Sólo que únicamente listando el último mantenimiento
@@ -50,8 +59,8 @@ $(function () {
 
         $.ajax({
             type: "GET",
-            url: "php/ultimoMantenimiento/listalo.php",
-            
+            url: "php/ultimoMantenimiento/listaloKms.php",
+
             success: function (response) {
                 console.log(response);
 
@@ -62,68 +71,68 @@ $(function () {
                     equipo = `
                                 <a idHoras=${y.idHoras} href='#' class='gooHoras'>${y.nombre}</a>
                             `;
-        
+
                     equipoSinLink = `
                         ${y.nombre}
                     `;
-        
-        
+
+
                     template += `
-        
+
                     <div class='contenApp my-4'>
                     <div class=''>
                         ${y.fechaIngreso}
                     </div>
-        
-                        
-        
-        
-        
-        
-        
-        
-                        
+
+
+
+
+
+
+
+
+
                         <table class='table table-bordered table-sm' style='margin-top:-0px'>
                             <thead class='tabledark' id='tableWeird'>
                                 <tr>
-                                                    
-                                    <td> Rutina de mantenimiento Nº: ${y.rutina}</td>    
-                        
+
+                                    <td> Rutina de mantenimiento Nº: ${y.rutina}</td><img id='imprimibleDetallado' class='abs' src='css/img/printer.svg' width='20'>
+
                                 </tr>
-        
+
                             </thead>
-                            
+
                             <!-- Id registros, time to shine
                             -- In here we will load all of our data got from listingEquipos.php through app.js     -->
                             <tbody id='registros2'>
-                                
+
                                 <tr>
-        
+
                                     <td>
                                         <div class='row'>
 
                                             <div class='col'> <b>Actividades:</b><br> ${y.actividades}</div>
                                             <div class='col'> <b>Observaciones:</b><br> ${y.comentariosActividades}</div>
-                                           
-                                           
-                                           
+
+
+
 
                                         </div>
                                         <hr>
                                         <br>
-                                   
+
                                     </td>
-                            
+
                                 </tr>
-                                    
-                                
-        
+
+
+
                             </tbody>
                         </table>
-                    </div>        
-        
+                    </div>
+
                                 `;
-        
+
                 });
                 $('#equipo').html(nombre);
                 //$('#registros').html(template);
@@ -134,13 +143,13 @@ $(function () {
         $.ajax({
             type: "GET",
             url: "php/ultimoMantenimiento/getMainRowKms.php",
-            
+
             success: function (response) {
                 console.log(response);
                 let mainRow = JSON.parse(response);
                 let aTemplate = ''; let templating = ''; let nombre = '';
                 mainRow.forEach(element => {
-                    aTemplate += 
+                    aTemplate +=
                             `
                                 <tr>
                                     <td>${element.marca}</td>
@@ -148,10 +157,10 @@ $(function () {
                                     <td>${element.serial}</td>
                                     <td>${element.arreglo}</td>
                                     <td>${element.placa}</td>
-                                </tr>                        
+                                </tr>
                             `;
 
-                    templating += 
+                    templating +=
                             `
                                 <tr>
                                     <td class='rut1' hrs='${element.kmsReales1}' >${element.rutina1}</td>
@@ -165,7 +174,7 @@ $(function () {
                 //$('#registros').html(aTemplate);
                 $('#registrosHoras').html(templating);
                 $('#equipo').html(nombre);
-                
+
                 function detectarRutinaCercana(){
                     /** Comenzamos por guardar todos los números mayores a cero en un arreglo. */
                     var hrsParaRutina = [];
@@ -223,36 +232,36 @@ $(function () {
                     //console.log(response);
                     /** Coloring */
                     // ------------ Rutina 1 -----------------------------------------------------//
-                        if ( $('.rut1').text() >= 75 ){
+                        if ( $('.rut1').text() >= 1500 ){
                             $('.rut1').css('background-color', '#DDF0EC');
-                        } else if ( $('.rut1').text() < 75 && $('.rut1').text() >= 25 ) {
+                        } else if ( $('.rut1').text() < 1500 && $('.rut1').text() >= 500 ) {
                             $('.rut1').css('background-color', 'rgba(230,79,19, 0.6)');
                         }
                         else {
                             $('.rut1').css('background-color', 'rgba(213,11,14,0.6)');
                         }
                     // ------------ Rutina 2 -----------------------------------------------------//
-                        if ( $('.rut2').text() >= 150 ){
+                        if ( $('.rut2').text() >= 3000 ){
                             $('.rut2').css('background-color', '#DDF0EC');
-                        } else if ( $('.rut2').text() < 150 && $('.rut2').text() >= 50 ) {
+                        } else if ( $('.rut2').text() < 3000 && $('.rut2').text() >= 1000 ) {
                             $('.rut2').css('background-color', 'rgba(230,79,19, 0.6)');
                         }
                         else {
                             $('.rut2').css('background-color', 'rgba(213,11,14,0.6)');
                         }
                     // ------------ Rutina 3 -----------------------------------------------------//
-                        if ( $('.rut3').text() >= 300 ){
+                        if ( $('.rut3').text() >= 6000 ){
                             $('.rut3').css('background-color', '#DDF0EC');
-                        } else if ( $('.rut3').text() < 300 && $('.rut3').text() >= 100 ) {
+                        } else if ( $('.rut3').text() < 6000 && $('.rut3').text() >= 2000 ) {
                             $('.rut3').css('background-color', 'rgba(230,79,19, 0.6)');
                         }
                         else {
                             $('.rut3').css('background-color', 'rgba(213,11,14,0.6)');
                         }
                     // ------------ Rutina 4 -----------------------------------------------------//
-                        if ( $('.rut4').text() >= 600 ){
+                        if ( $('.rut4').text() >= 12000 ){
                             $('.rut4').css('background-color', '#DDF0EC');
-                        } else if ( $('.rut4').text() < 600 && $('.rut4').text() >= 200 ) {
+                        } else if ( $('.rut4').text() < 12000 && $('.rut4').text() >= 4000 ) {
                             $('.rut4').css('background-color', 'rgba(230,79,19, 0.6)');
                         }
                         else {
@@ -261,19 +270,19 @@ $(function () {
                         detectarRutinaCercana();
                     /** Hasta arriba coloreábamos, ahora queremos mostrar una lista de las actividades por venir. */
                     }
-            
+
                 colorear();
-               
-                
+
+
             }
-            
+
         });
 
-        
-        
+
+
 
     }
     listando();
-    
+
 
 });

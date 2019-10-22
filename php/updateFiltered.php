@@ -6,7 +6,7 @@
     $aid = $_POST['aid'];
     $_SESSION['myId2'] = $aid;
 
-    $sql = "SELECT * FROM tarjetaEquipo WHERE id LIKE '$aid' ";
+    $sql = "SELECT * FROM mt_records WHERE id LIKE '$aid' ";
     $res = mysqli_query($db, $sql);
 
     if(!$res){

@@ -1,0 +1,192 @@
+/** Changes to make it look close to what A wanted **/
+.navbar{
+    height: 50px;
+    background-color:#77C0B1;
+    padding:0px;
+    /** Shadows */
+    -webkit-box-shadow: 0px 3px 20px -5px rgba(51,51,51,1);
+    -moz-box-shadow: 0px 3px 20px -5px rgba(51,51,51,1);
+    box-shadow: 0px 3px 20px -5px rgba(51,51,51,1);
+    z-index:1;
+
+}
+.dashi{
+    line-height: -10px;
+    margin-left:20px;
+}
+#lookIt{
+    text-indent: 40px;
+    background-color:white;
+    width:320px;
+    height: 38px;
+    border-radius: 16px;
+}
+input#lookIt{
+    background-image: url('img/lupa.png');
+    background-size:36px;
+    background-repeat: no-repeat;
+}
+.menuHambur{
+    filter:invert(100%);
+}
+/** Col2; columna de botones */
+.col2{
+    background-color: #ffffff;
+    border-right: black;
+    z-index: 0;
+}
+/**  Botones */
+.boton{
+    text-indent: 64px;
+    padding: 14px;
+    cursor:pointer;
+    width:100%;
+}
+#historial{
+    /**text-indent: 14px;
+    /** Cause 'selected' **/
+    background-color: #DDF0EC;
+}
+.tabledark{
+    background-color: #DDF0EC;
+}
+.boton:hover{
+    background-color:#DDF0EC;
+}
+/** Vehiculo (inutil yet) del usuario */
+.userVehiculos{
+    display:none;
+}
+/** row */
+.g{
+    background-color:#EDEDED;
+}
+#logOut{
+    text-indent: 50px;
+}
+/** Let's do the absolute-> relative trick *
+ ** for the icons positionig               */
+.relative{
+    position:relative;
+}
+.abso_icons{
+    position:absolute;
+    top:13px;
+    left:40px;
+}
+
+#logout{left:36px}
+#vehi_icon{
+    top:13px;
+}
+.conten{
+    background-color: white;
+    padding:6px;
+    border-radius: 10px;
+    -webkit-box-shadow: 2px 2px 2px 1px rgba(98, 98, 98, 0.75);
+    -moz-box-shadow: 2px 2px 2px 1px rgba(97, 97, 97, 0.75);
+    box-shadow: 2px 2px 2px 1px rgba(98, 98, 98, 0.75);
+    position:relative;
+}
+#col_10{
+    background-color: #ededed;
+}
+#btnKms{
+    position:absolute;
+    right: 30px;
+    top:10px;
+    /**Enoug positioning, now styling*/
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    /* show a hand cursor on hover; some argue that we
+    should keep the default arrow cursor for buttons */
+    cursor: pointer;
+     /* create a small space when buttons wrap on 2 lines */
+    margin: 2px 0;
+
+    /* invisible border (will be colored on hover/focus) */
+    border: solid 1px transparent;
+    border-radius: 4px;
+
+    /* size comes from text & padding (no width/height) */
+    padding: 0.5em 1em;
+
+    /* make sure colors have enough contrast! */
+    color: black;
+    background-color: #77C0B1;
+}
+#btnKms:active {
+    transform: translateY(1px);
+    filter: saturate(150%);
+}
+#btnKms:hover {
+    color: #77C0B1;
+    border-color: currentColor;
+    background-color: white;
+  }
+.contenApp{
+    background-color: white;
+    padding:10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 2px 2px 2px 1px rgba(98, 98, 98, 0.75);
+    -moz-box-shadow: 2px 2px 2px 1px rgba(97, 97, 97, 0.75);
+    box-shadow: 2px 2px 2px 1px rgba(98, 98, 98, 0.75);
+}
+/* Making tooltips wider */
+.tooltip-inner {
+    max-width: 100% !important;
+}
+/* Aligning <li> inside wrapper to the left */
+li{
+    text-align:left;
+}
+label{
+    margin-bottom:0px;
+}
+.abs{
+    position:absolute;
+    right: 20px;
+    cursor:pointer;
+}
+/* hr with text */
+.strike {
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.strike > span {
+    position: relative;
+    display: inline-block;
+}
+
+.strike > span:before,
+.strike > span:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 9999px;
+    height: 1px;
+    background: gray;
+}
+
+.strike > span:before {
+    right: 100%;
+    margin-right: 15px;
+}
+
+.strike > span:after {
+    left: 100%;
+    margin-left: 15px;
+}
+#imprimibleDetallado{
+
+    left:220px;
+    top:60px;
+
+
+}

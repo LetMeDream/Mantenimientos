@@ -16,7 +16,7 @@ $(function () {
     $(document).on('click', '#register', function(e){
 
         //e.preventDefault();
-        
+
         window.location.href = 'register_app.php';
 
     });
@@ -34,7 +34,7 @@ $(function () {
         $.ajax({
             type: "GET",
             url: "php/vehiculos/logOut.php",
-            
+
             success: function (response) {
                 window.location.href='index.php';
             }
@@ -46,21 +46,21 @@ $(function () {
         window.location.href = 'mantenimientosU.php';
     });
 
-    /* Enabling tool tips*/ 
+    /* Enabling tool tips*/
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
 
-    
+
     /** Listing */
     function listThem(){
-        
-       
+
+
         $.ajax({
             type: "GET",
             url: "php/mantenimientos/getNombreInexistente.php",
             data: "data",
-            
+
             success: function (response) {
                 let data = JSON.parse(response);
                 console.log(data.nombre);
@@ -74,7 +74,7 @@ $(function () {
                         /** Lets convert the string-like response into an usable object */
                         let x = JSON.parse(response);
                         // Are we currently receiving something?
-                        
+
                         /** X = equipos */
                         if (x.length == 0) {
                             console.log('We are not receiving anything.');
@@ -91,7 +91,7 @@ $(function () {
                                     let mainRow = JSON.parse(response);
                                     let template = ''; let templating = '';
                                     mainRow.forEach(element => {
-                                        template += 
+                                        template +=
                                                 `
                                                     <tr>
                                                         <td>${element.marca}</td>
@@ -99,10 +99,10 @@ $(function () {
                                                         <td>${element.serial}</td>
                                                         <td>${element.arreglo}</td>
                                                         <td>${element.placa}</td>
-                                                    </tr>                        
+                                                    </tr>
                                                 `;
 
-                                        templating += 
+                                        templating +=
                                                 `
                                                     <tr>
                                                         <td class='rut1' kms='${element.kmsReales1}' >${element.rutina1}</td>
@@ -114,139 +114,139 @@ $(function () {
                                     });
                                     $('#registros').html(template);
                                     $('#registrosKms').html(templating);
-                                    
+
                                     /**  */
                                     let rutina1 = `
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act1'>1)Revisar del estado de la(s) correa(s) del motor y comprobar tensión.</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act2'>2)Inspeccionar y limpiar filtro de aire.</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act3'>3)Revisar nivel de electrólito y de los bornes de la batería.</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act4'>4)Chequear niveles de aceite de la caja velocidades automatica  (Si aplica)</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act5'>5)Revisar nivel de refrigerante. Estado del radiador y mangueras</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act6'>6)Revisar estado y presion de inflado de cauchos. Chequeo del apriete de tuercas.</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act7'>7)Cambiar de aceite y del filtro del motor.</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act8'>8)Chequear funcionamiento del sistema electrico, luces e instrumentos</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act9'>9)Chequear frenos de servicio y estacionamiento. </label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act10'>10)Chequear fugas de agua, aceite y combustible</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act11'>11)Limpieza General, lavado y engrase.</label></div>
-                                                        
+
                                                     </div>
-                                                    
+
                                                     `;
                                     let rutina2 = `
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act12'> 12)Chequear graduación de embrague (Si Aplica)</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act13'> 13)Cambiar filtros de combustible</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act14'> 14)Realizar alineacion y balanceo de cauchos</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act15'> 15)Chequear sistema de dirección, falta de ajuste, estado de articulaciones, rotulas, protectores, etc  </label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act16'> 16)Chequear sistema de suspensión, condicion de amortiguadores, falta de ajuste en conexiones, etc</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act17'> 17)Limpiar filtro aire de cabina o antipolen del sistema de A/A.</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act18'> 18)Chequear nivel de aceite de caja de velocidades mecanica (Si Aplica)</label></div>
-                                                        
+
                                                     </div>
                                                     `
                                     let rutina3 = `
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act19'> 19)Reemplazar filtro de aire</label></div>
-                                                        
-                                                    </div> 
+
+                                                    </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act20'> 20)Chequear condicion y funcionamiento de alternador y arranque</label></div>
-                                                        
-                                                    </div> 
+
+                                                    </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act21'> 21)Reemplazar filtro y aceite de caja de velocidades automatica (Si Aplica)</label></div>
-                                                        
-                                                    </div> 
+
+                                                    </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act22'> 22)Rotar cauchos </label></div>
-                                                        
-                                                    </div> 
+
+                                                    </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act23'> 23)Realizar limpieza y mantenimiento del sistema de frenos. Chequear desgaste de pastillas y bandas.</label></div>
-                                                        
-                                                    </div> 
+
+                                                    </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act24'> 24)Verificar funciomiento de sistema A/A. Presion de Gas Refrigerante. Reemplazar filtro de aire cabina.</label></div>
-                                                        
-                                                    </div> 
+
+                                                    </div>
 
                                                 `;
                                     let rutina4 = `
-            
+
                                                 <div class='row'>
                                                     <div class='col-12'><label for='act25'> 25)Drenaje y reemplazo de refrigerante motor.</label></div>
-                                                    
-                                                </div> 
+
+                                                </div>
                                                 <div class='row'>
                                                     <div class='col-12'><label for='act26'> 26)Ajuste del juego de válvulas del motor. Chequear compresion de motor.</label></div>
-                                                    
-                                                </div> 
+
+                                                </div>
                                                 <div class='row'>
                                                     <div class='col-12'><label for='act27'> 27)Cambiar correa(s) del motor.</label></div>
-                                                    
-                                                </div> 
+
+                                                </div>
                                                 <div class='row'>
                                                     <div class='col-12'><label for='act28'> 28)Reemplazar Bujias. Verificar estado de cables.</label></div>
-                                                    
-                                                </div> 
-                                                
+
+                                                </div>
+
                                                 <div class='row'>
                                                     <div class='col-12'><label for='act29'> 29)Chequear sistema de inyección (Si aplica).</label></div>
-                                                    
-                                                </div> 
+
+                                                </div>
                                                 <div class='row'>
                                                     <div class='col-12'><label for='act30'> 30)Reemplazar aceite de caja de velocidades mecanicas y gomas protectoras.</label></div>
-                                                    
-                                                </div> 
+
+                                                </div>
                                                 `;
                                     function detectarRutinaCercana(){
                                                     /** Comenzamos por guardar todos los números mayores a cero en un arreglo. */
@@ -263,7 +263,7 @@ $(function () {
                                                     hrsParaRutina.push( $('.rut2').attr('kms') );
                                                     }
                                                     if ($('.rut3').text() > 0 ){
-                                                        
+
                                                     hrsParaRutina.push( $('.rut3').attr('kms') );
                                                     }
                                                     else{
@@ -344,23 +344,23 @@ $(function () {
                                             detectarRutinaCercana();
                                         /** Hasta arriba coloreábamos, ahora queremos mostrar una lista de las actividades por venir. */
                                         }
-                                
+
                                     colorear();
                                     /** Yo matándome and it was so easy */
                                     $('.col2,.g').height( ($(document).height()  ));
-                        
-                                    
+
+
                                 }
                             });
                             // Some console checking
                             //console.log(x);
                             /** Dont get behind, kiddo (class='col-2') */
-                            
+
                             /**Template that will be send to the HTML */
-                            let template2 = '';  
+                            let template2 = '';
                             let equipo = '';
 
-                        
+
 
                             /** Acá listamos los mantenimientos; desde el primer Ajax request (Listalos.php) */
                             x.forEach(y => {
@@ -372,7 +372,7 @@ $(function () {
                                 equipoSinLink = `
                                     ${y.nombre}
                                 `;
-                                
+
 
                                 template2 += `
 
@@ -380,21 +380,21 @@ $(function () {
                                 <div class=''>
                                     ${y.fechaIngreso}
                                 </div>
-                                                                    
+
                                     <table class='table table-bordered table-sm' style='margin-top:-0px'>
                                         <thead class='tabledark' id='tableWeird'>
                                             <tr>
-                                                                
-                                                <td> Rutina de mantenimiento Nº: ${y.rutina}</td>    
-                                    
+
+                                                <td> Rutina de mantenimiento Nº: ${y.rutina}</td>
+
                                             </tr>
-                                
+
                                         </thead>
-                                        
+
                                         <!-- Id registros, time to shine
                                         -- In here we will load all of our data got from listingEquipos.php through app.js     -->
                                         <tbody id='registros2'>
-                                            
+
                                             <tr>
 
                                             <td>
@@ -403,29 +403,29 @@ $(function () {
 
                                                     <div class='col'> <b>Actividades:</b><br> ${y.actividades}</div>
                                                     <div class='col'> <b>Observaciones:</b><br> ${y.comentariosActividades}</div>
-                                                
-                                                
-                                                
+
+
+
 
                                                 </div>
                                                 <hr>
                                                 <br>
-                                    
+
                                             </td>
-                                        
+
                                             </tr>
-                                                
-                                            
+
+
 
                                         </tbody>
                                     </table>
-                                </div>        
+                                </div>
 
                                             `;
-                        
-                            });  
-                            
-                            
+
+                            });
+
+
                             $('#equipo').html(equipoSinLink);
                         }
                         else{
@@ -439,7 +439,7 @@ $(function () {
                                     let mainRow = JSON.parse(response);
                                     let template = ''; let templating = '';
                                     mainRow.forEach(element => {
-                                        template += 
+                                        template +=
                                                 `
                                                     <tr>
                                                         <td>${element.marca}</td>
@@ -447,10 +447,10 @@ $(function () {
                                                         <td>${element.serial}</td>
                                                         <td>${element.arreglo}</td>
                                                         <td>${element.placa}</td>
-                                                    </tr>                        
+                                                    </tr>
                                                 `;
 
-                                        templating += 
+                                        templating +=
                                                 `
                                                     <tr>
                                                         <td class='rut1' kms='${element.kmsReales1}' >${element.rutina1}</td>
@@ -462,139 +462,139 @@ $(function () {
                                     });
                                     $('#registros').html(template);
                                     $('#registrosKms').html(templating);
-                                    
+
                                     /**  */
                                     let rutina1 = `
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act1'>1)Revisar del estado de la(s) correa(s) del motor y comprobar tensión.</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act2'>2)Inspeccionar y limpiar filtro de aire.</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act3'>3)Revisar nivel de electrólito y de los bornes de la batería.</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act4'>4)Chequear niveles de aceite de la caja velocidades automatica  (Si aplica)</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act5'>5)Revisar nivel de refrigerante. Estado del radiador y mangueras</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act6'>6)Revisar estado y presion de inflado de cauchos. Chequeo del apriete de tuercas.</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act7'>7)Cambiar de aceite y del filtro del motor.</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act8'>8)Chequear funcionamiento del sistema electrico, luces e instrumentos</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act9'>9)Chequear frenos de servicio y estacionamiento. </label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act10'>10)Chequear fugas de agua, aceite y combustible</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act11'>11)Limpieza General, lavado y engrase.</label></div>
-                                                        
+
                                                     </div>
-                                                    
+
                                                     `;
                                     let rutina2 = `
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act12'> 12)Chequear graduación de embrague (Si Aplica)</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act13'> 13)Cambiar filtros de combustible</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act14'> 14)Realizar alineacion y balanceo de cauchos</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act15'> 15)Chequear sistema de dirección, falta de ajuste, estado de articulaciones, rotulas, protectores, etc  </label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act16'> 16)Chequear sistema de suspensión, condicion de amortiguadores, falta de ajuste en conexiones, etc</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act17'> 17)Limpiar filtro aire de cabina o antipolen del sistema de A/A.</label></div>
-                                                        
+
                                                     </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act18'> 18)Chequear nivel de aceite de caja de velocidades mecanica (Si Aplica)</label></div>
-                                                        
+
                                                     </div>
                                                     `
                                     let rutina3 = `
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act19'> 19)Reemplazar filtro de aire</label></div>
-                                                        
-                                                    </div> 
+
+                                                    </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act20'> 20)Chequear condicion y funcionamiento de alternador y arranque</label></div>
-                                                        
-                                                    </div> 
+
+                                                    </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act21'> 21)Reemplazar filtro y aceite de caja de velocidades automatica (Si Aplica)</label></div>
-                                                        
-                                                    </div> 
+
+                                                    </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act22'> 22)Rotar cauchos </label></div>
-                                                        
-                                                    </div> 
+
+                                                    </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act23'> 23)Realizar limpieza y mantenimiento del sistema de frenos. Chequear desgaste de pastillas y bandas.</label></div>
-                                                        
-                                                    </div> 
+
+                                                    </div>
                                                     <div class='row'>
                                                         <div class='col-12'><label for='act24'> 24)Verificar funciomiento de sistema A/A. Presion de Gas Refrigerante. Reemplazar filtro de aire cabina.</label></div>
-                                                        
-                                                    </div> 
+
+                                                    </div>
 
                                                 `;
                                     let rutina4 = `
-            
+
                                                 <div class='row'>
                                                     <div class='col-12'><label for='act25'> 25)Drenaje y reemplazo de refrigerante motor.</label></div>
-                                                    
-                                                </div> 
+
+                                                </div>
                                                 <div class='row'>
                                                     <div class='col-12'><label for='act26'> 26)Ajuste del juego de válvulas del motor. Chequear compresion de motor.</label></div>
-                                                    
-                                                </div> 
+
+                                                </div>
                                                 <div class='row'>
                                                     <div class='col-12'><label for='act27'> 27)Cambiar correa(s) del motor.</label></div>
-                                                    
-                                                </div> 
+
+                                                </div>
                                                 <div class='row'>
                                                     <div class='col-12'><label for='act28'> 28)Reemplazar Bujias. Verificar estado de cables.</label></div>
-                                                    
-                                                </div> 
-                                                
+
+                                                </div>
+
                                                 <div class='row'>
                                                     <div class='col-12'><label for='act29'> 29)Chequear sistema de inyección (Si aplica).</label></div>
-                                                    
-                                                </div> 
+
+                                                </div>
                                                 <div class='row'>
                                                     <div class='col-12'><label for='act30'> 30)Reemplazar aceite de caja de velocidades mecanicas y gomas protectoras.</label></div>
-                                                    
-                                                </div> 
+
+                                                </div>
                                                 `;
                                     function detectarRutinaCercana(){
                                                     /** Comenzamos por guardar todos los números mayores a cero en un arreglo. */
@@ -611,7 +611,7 @@ $(function () {
                                                     hrsParaRutina.push( $('.rut2').attr('kms') );
                                                     }
                                                     if ($('.rut3').text() > 0 ){
-                                                        
+
                                                     hrsParaRutina.push( $('.rut3').attr('kms') );
                                                     }
                                                     else{
@@ -692,23 +692,23 @@ $(function () {
                                             detectarRutinaCercana();
                                         /** Hasta arriba coloreábamos, ahora queremos mostrar una lista de las actividades por venir. */
                                         }
-                                
+
                                     colorear();
                                     /** Yo matándome and it was so easy */
                                     $('.col2,.g').height( ($(document).height()  ));
-                        
-                                    
+
+
                                 }
                             });
                             // Some console checking
                             //console.log(x);
                             /** Dont get behind, kiddo (class='col-2') */
-                            
+
                             /**Template that will be send to the HTML */
-                            let template2 = '';  
+                            let template2 = '';
                             let equipo = '';
 
-                        
+
 
                             /** Acá listamos los mantenimientos; desde el primer Ajax request (Listalos.php) */
                             x.forEach(y => {
@@ -720,7 +720,7 @@ $(function () {
                                 equipoSinLink = `
                                     ${y.nombre}
                                 `;
-                                
+
 
                                 template2 += `
 
@@ -728,21 +728,21 @@ $(function () {
                                 <div class=''>
                                     ${y.fechaIngreso}
                                 </div>
-                                                                    
+
                                     <table class='table table-bordered table-sm' style='margin-top:-0px'>
                                         <thead class='tabledark' id='tableWeird'>
                                             <tr>
-                                                                
-                                                <td> Rutina de mantenimiento Nº: ${y.rutina}</td>    
-                                    
+
+                                                <td> Rutina de mantenimiento Nº: ${y.rutina}</td>
+
                                             </tr>
-                                
+
                                         </thead>
-                                        
+
                                         <!-- Id registros, time to shine
                                         -- In here we will load all of our data got from listingEquipos.php through app.js     -->
                                         <tbody id='registros2'>
-                                            
+
                                             <tr>
 
                                             <td>
@@ -751,54 +751,54 @@ $(function () {
 
                                                     <div class='col'> <b>Actividades:</b><br> ${y.actividades}</div>
                                                     <div class='col'> <b>Observaciones:</b><br> ${y.comentariosActividades}</div>
-                                                
-                                                
-                                                
+
+
+
 
                                                 </div>
                                                 <hr>
                                                 <br>
-                                    
+
                                             </td>
-                                        
+
                                             </tr>
-                                                
-                                            
+
+
 
                                         </tbody>
                                     </table>
-                                </div>        
+                                </div>
 
                                             `;
-                        
-                            });  
-                            
-                            
+
+                            });
+
+
                             $('#equipo').html(equipoSinLink);
                             //$('#registros').html(template);
                             $('#inHere').html(template2);
 
                             /** Yo matándome and it was so easy */
                             $('.col2,.g').height( ($(document).height() ) );
-                        
+
 
                         }
-                        
+
                     }
                 });
-               
+
             }
         });
     }
     listThem();
-    
+
     /** Filtering */
      /** Logic for the filtering process */
-     $('#lookIt').change(function () { 
-        
+     $('#lookIt').change(function () {
+
         /** If there's a valua on the search (#lookIT) then proceed */
         if( $('#lookIt').val()){
-            /** Variable que será enviada por AJAX. */ 
+            /** Variable que será enviada por AJAX. */
             let search = $('#lookIt').val();
             /** Hacemos una petición al servidor con AJAX desde Jquery */
             //console.log(search);
@@ -808,7 +808,7 @@ $(function () {
                 type: "POST",
                 url: "php/mantenimientosKms/filter.php",
                 data: {date: search},
-                
+
                 success: function (response) {
                     let filtrados = JSON.parse(response);
                     console.log(filtrados);
@@ -821,62 +821,62 @@ $(function () {
                                 <div class=''>
                                     ${y.fechaIngreso}
                                 </div>
-                                                                    
+
                                     <table class='table table-bordered table-sm' style='margin-top:-0px'>
                                         <thead class='tabledark' id='tableWeird'>
                                             <tr>
-                                                                
-                                                <td> Rutina de mantenimiento Nº: ${y.rutina}</td>    
-                                    
+
+                                                <td> Rutina de mantenimiento Nº: ${y.rutina}</td>
+
                                             </tr>
-                                
+
                                         </thead>
-                                        
+
                                         <!-- Id registros, time to shine
                                         -- In here we will load all of our data got from listingEquipos.php through app.js     -->
                                         <tbody id='registros2'>
-                                            
+
                                             <tr>
 
                                             <td>
-                                            
+
                                                 <div class='row'>
-        
+
                                                     <div class='col'> <b>Actividades:</b><br> ${y.actividades}</div>
                                                     <div class='col'> <b>Observaciones:</b><br> ${y.comentariosActividades}</div>
-                                                
-                                                
-                                                
-        
+
+
+
+
                                                 </div>
                                                 <hr>
                                                 <br>
-                                       
+
                                             </td>
-                                        
+
                                             </tr>
-                                                
-                                            
+
+
 
                                         </tbody>
                                     </table>
-                                </div>        
+                                </div>
 
                                         `;
-                        
+
                     })
                     $('#inHere').html(templateX);
-                   
+
                     $('#col_10').height( ($(document).height() ) );
 
 
 
                 }
             });
-           
-        
-        } 
-        
+
+
+        }
+
     });
 
 });

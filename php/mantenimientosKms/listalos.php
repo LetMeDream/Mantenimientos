@@ -10,7 +10,7 @@
     
 
 
-    $sql= "SELECT * FROM tarjetaEquipo WHERE deviceId LIKE '$deviceId' AND enFuncionDe LIKE 'kms' ";
+    $sql= "SELECT * FROM mt_records WHERE deviceId LIKE '$deviceId' AND enFuncionDe LIKE 'kms' ";
     $res = mysqli_query($db, $sql);
     if (!$res){
         die('Querie failed: '. mysqli_error($db));
